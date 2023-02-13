@@ -2,8 +2,8 @@ window.addEventListener("DOMContentLoaded", function() {
 
     // get the form elements defined in your form HTML above
     
-    var form = document.getElementById("my-form");
-    var status = document.getElementById("my-form-status");
+    var form = document.getElementById("email-form");
+    var status = document.getElementById("email-form-status");
 
     // Success and Error functions for after the form is submitted
     
