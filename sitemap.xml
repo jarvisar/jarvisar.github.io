@@ -25,4 +25,9 @@
       <changefreq>weekly</changefreq>
       <priority>0.1</priority>
    </url>
+      url>
+      <loc>https://jarvisar.github.io/datavis-project2/</loc>
+      <changefreq>weekly</changefreq>
+      <priority>0.1</priority>
+   </url>
 </urlset>
