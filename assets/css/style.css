@@ -1024,6 +1024,28 @@ section {
   margin-left: -65px;
 }
 
+.styled-bullets {
+  list-style: none; /* remove default bullets */
+}
+
+.styled-bullets ul {
+  list-style: none; /* remove default bullets */
+}
+
+.styled-bullets li:before {
+  content: "\29BF";
+  color: #54863f;
+  margin-right: 8px;
+  font-size: 14px;
+}
+
+.styled-bullets ul li:before {
+  content: "\2023";
+  color: #54863f;
+  margin-right: 8px;
+  font-size: 20px;
+}
+
 /* if mobile no margin on my skills */
 @media only screen and (max-width: 600px) {
   .my-skills{
