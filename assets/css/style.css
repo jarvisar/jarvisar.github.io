@@ -1015,3 +1015,19 @@ section {
   height: 750px !important;
   width: 1500px !important;
 } 
+
+.my-skills{
+  margin-left: 280px;
+}
+
+.my-skills-2{
+  margin-left: -65px;
+}
+
+/* if mobile no margin on my skills */
+@media only screen and (max-width: 600px) {
+  .my-skills{
+    margin-left: 0px;
+  }
+}
+
