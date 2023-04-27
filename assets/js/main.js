@@ -294,7 +294,7 @@ camera.position.x = 0;
 camera.position.y = 1.5;
 camera.position.z = 5;
 
-var renderer = new THREE.WebGLRenderer({ alpha: true });
+var renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 // get div height
 var divHeight = document.getElementById("3d").clientHeight;
 renderer.setSize( divHeight, divHeight );
@@ -308,7 +308,7 @@ loader.load( 'assets/models/computer.glb', function ( gltf ) {
 } );
 
 // ambient light
-var light = new THREE.AmbientLight( 0xffffff ); // soft white light
+var light = new THREE.AmbientLight( 0xffffff ); // white light
 scene.add( light );
 
 // directional light
@@ -326,8 +326,6 @@ controls.autoRotateSpeed = 0.75;
 
 var animate = function () {
     requestAnimationFrame( animate );
-
-    
 
     controls.update();
 
