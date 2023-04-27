@@ -302,6 +302,11 @@ document.getElementById("3d").appendChild( renderer.domElement );
 
 var loader = new GLTFLoader();
 loader.load( 'assets/models/computer.glb', function ( gltf ) {
+  gltf.scene.traverse( child => {
+
+    if ( child.material ) child.material.metalness = 0;
+
+} );
     scene.add( gltf.scene );
 }, undefined, function ( error ) {
     console.error( error );
@@ -312,8 +317,19 @@ var light = new THREE.AmbientLight( 0xffffff ); // white light
 scene.add( light );
 
 // directional light
-var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.7 );
-scene.add( directionalLight );
+var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+directionalLight.position.set(0, 1, 0); // set position
+scene.add(directionalLight);
+
+// directional light
+var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+directionalLight.position.set(0, 0, 1); // set position
+scene.add(directionalLight);
+
+// directional light
+var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+directionalLight.position.set(1, 0, -1); // set position
+scene.add(directionalLight);
 
 // orbit controls
 var controls = new OrbitControls( camera, renderer.domElement );
