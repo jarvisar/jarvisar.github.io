@@ -305,9 +305,8 @@ loader.load( 'assets/models/computer.glb', function ( gltf ) {
   gltf.scene.traverse( child => {
 
     if ( child.material ) child.material.metalness = 0;
-
-} );
-    scene.add( gltf.scene );
+  });
+  scene.add( gltf.scene );
 }, undefined, function ( error ) {
     console.error( error );
 } );
