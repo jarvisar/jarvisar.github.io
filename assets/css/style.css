@@ -1055,5 +1055,10 @@ section {
   .my-skills-2{
     margin-left: 0px;
   }
+
+  /* Also hide id=3d container */
+  #3d {
+    display: none;
+  }
 }
 

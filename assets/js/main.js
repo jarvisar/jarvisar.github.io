@@ -4,6 +4,11 @@
 * Author: BootstrapMade.com
 * License: https://bootstrapmade.com/license/
 */
+
+import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.149.0/examples/jsm/loaders/GLTFLoader'
+import { OrbitControls } from "https://unpkg.com/three@0.138.0/examples/jsm/controls/OrbitControls.js"
+import * as THREE from "https://cdn.skypack.dev/three@0.149.0";
+
 (function() {
   "use strict";
 
@@ -281,3 +286,52 @@
   new PureCounter();
 
 })()
+
+// load computer glb using threejs, and put in div id=3d 
+var scene = new THREE.Scene();
+var camera = new THREE.PerspectiveCamera( 14, 1, 0.1, 1000 );
+camera.position.x = 0;
+camera.position.y = 1.5;
+camera.position.z = 5;
+
+var renderer = new THREE.WebGLRenderer({ alpha: true });
+// get div height
+var divHeight = document.getElementById("3d").clientHeight;
+renderer.setSize( divHeight, divHeight );
+document.getElementById("3d").appendChild( renderer.domElement );
+
+var loader = new GLTFLoader();
+loader.load( 'assets/models/computer.glb', function ( gltf ) {
+    scene.add( gltf.scene );
+}, undefined, function ( error ) {
+    console.error( error );
+} );
+
+// ambient light
+var light = new THREE.AmbientLight( 0xffffff ); // soft white light
+scene.add( light );
+
+// directional light
+var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.7 );
+scene.add( directionalLight );
+
+// orbit controls
+var controls = new OrbitControls( camera, renderer.domElement );
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
+controls.screenSpacePanning = false;
+controls.enableZoom = false;
+controls.autoRotate = true;
+controls.autoRotateSpeed = 0.75;
+
+var animate = function () {
+    requestAnimationFrame( animate );
+
+    
+
+    controls.update();
+
+    renderer.render( scene, camera );
+};
+
+animate();

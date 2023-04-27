@@ -30,6 +30,12 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
+	<script  type="importmap">{
+		"imports": {
+			"three": "https://threejs.org/build/three.module.js"
+		}
+	}</script>
+
   <!-- =======================================================
   * Template Name: MyResume - v4.10.0
   * Template URL: https://bootstrapmade.com/free-html-bootstrap-template-my-resume/
@@ -70,6 +76,9 @@
         <a href="mailto:adamjarvis04@gmail.com" class="email"><i class="bx bx-envelope"></i></a>
       </div>
     </div>
+
+    <!-- Div for 3d glb -->
+    <div id="3d" style="width: 50%; height: 60%; position: absolute; top: 15%; right: 50px;" class="container" data-aos="zoom-in" data-aos-delay="100"></div>
   </section><!-- End Hero -->
 
   <main id="main">
@@ -634,7 +643,7 @@
   <script src="assets/vendor/email-form/email-form.js"></script>
 
   <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
+  <script type="module" src="assets/js/main.js"></script>
 
 </body>
 
