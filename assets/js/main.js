@@ -316,7 +316,7 @@ var light = new THREE.AmbientLight( 0xffffff ); // white light
 scene.add( light );
 
 // directional light
-var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+var directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
 directionalLight.position.set(0, 1, 0); // set position
 scene.add(directionalLight);
 
@@ -326,8 +326,18 @@ directionalLight.position.set(0, 0, 1); // set position
 scene.add(directionalLight);
 
 // directional light
-var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-directionalLight.position.set(1, 0, -1); // set position
+var directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
+directionalLight.position.set(0, 1, -1); // set position
+scene.add(directionalLight);
+
+// directional light
+var directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
+directionalLight.position.set(1, 1, 0); // set position
+scene.add(directionalLight);
+
+// directional light
+var directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
+directionalLight.position.set(-1, 1, 0); // set position
 scene.add(directionalLight);
 
 // orbit controls
