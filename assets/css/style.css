@@ -1056,9 +1056,8 @@ section {
     margin-left: 0px;
   }
 
-  /* Also hide id=3d container */
-  #3d {
-    display: none;
+  .three-container{
+    position: relative;
   }
 }
 
