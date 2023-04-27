@@ -296,7 +296,7 @@ camera.position.z = 5;
 
 var renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 // get div height
-var divHeight = document.getElementById("three-container").clientHeight;
+var divHeight = document.getElementById("three-container").clientWidth;
 renderer.setSize( divHeight, divHeight );
 document.getElementById("three-container").appendChild( renderer.domElement );
 
