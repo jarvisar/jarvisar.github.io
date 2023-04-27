@@ -298,7 +298,7 @@ var renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 // get div height
 var divHeight = document.getElementById("three-container").clientHeight;
 renderer.setSize( divHeight, divHeight );
-document.getElementById("3d").appendChild( renderer.domElement );
+document.getElementById("three-container").appendChild( renderer.domElement );
 
 var loader = new GLTFLoader();
 loader.load( 'assets/models/computer.glb', function ( gltf ) {
