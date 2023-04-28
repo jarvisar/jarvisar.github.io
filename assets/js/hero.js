@@ -96,7 +96,7 @@ function render() {
     for (var i = 0; i < planeGeo.vertices.length; i++) {
         var z = +planeGeo.vertices[i].z;
         var randomOffset = (Math.random() - 0.5) * 10;
-        planeGeo.vertices[i].z = Math.sin(( i + count * 0.000002)) * (planeGeo.vertices[i]._myZ - (planeGeo.vertices[i]._myZ* 0.4)) + randomOffset;
+        planeGeo.vertices[i].z = Math.sin(( i + count * 0.000001)) * (planeGeo.vertices[i]._myZ - (planeGeo.vertices[i]._myZ* 0.4)) + randomOffset;
         plane.geometry.verticesNeedUpdate = true;
     
         count += 0.1
@@ -106,7 +106,7 @@ function render() {
     for (var i = 0; i < plane2Geo.vertices.length; i++) {
         var z = +plane2Geo.vertices[i].z;
         var randomOffset = (Math.random() - 0.5) * 10;
-        plane2Geo.vertices[i].z = Math.cos(( i + count * 0.000002)) * (plane2Geo.vertices[i]._myZ - (plane2Geo.vertices[i]._myZ* 0.5)) + randomOffset;
+        plane2Geo.vertices[i].z = Math.cos(( i + count * 0.00000075)) * (plane2Geo.vertices[i]._myZ - (plane2Geo.vertices[i]._myZ* 0.5)) + randomOffset;
         plane2.geometry.verticesNeedUpdate = true;
     
         count += 0.1
@@ -116,7 +116,7 @@ function render() {
     for (var i = 0; i < plane3Geo.vertices.length; i++) {
         var z = +plane3Geo.vertices[i].z;
         var randomOffset = (Math.random() - 0.5) * 10;
-        plane3Geo.vertices[i].z = Math.sin(( i + count * 0.000002)) * (plane3Geo.vertices[i]._myZ - (plane3Geo.vertices[i]._myZ* 0.6)) + randomOffset;
+        plane3Geo.vertices[i].z = Math.sin(( i + count * 0.0000005)) * (plane3Geo.vertices[i]._myZ - (plane3Geo.vertices[i]._myZ* 0.6)) + randomOffset;
         plane3.geometry.verticesNeedUpdate = true;
 
         count += 0.1
