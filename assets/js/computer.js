@@ -4,7 +4,7 @@ import * as THREE from "https://cdn.skypack.dev/three@0.149.0";
 
 // load computer glb using threejs, and put in div id=3d 
 var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera( 14, 1, 0.1, 1000 );
+var camera = new THREE.PerspectiveCamera( 12, 1, 0.1, 1000 );
 camera.position.x = 3.5;
 camera.position.y = 1;
 camera.position.z = 3.5;
