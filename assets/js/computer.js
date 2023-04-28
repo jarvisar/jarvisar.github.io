@@ -63,6 +63,7 @@ controls.screenSpacePanning = false;
 controls.enableZoom = false;
 controls.autoRotate = true;
 controls.autoRotateSpeed = 0.75;
+controls.enablePan = false;
 
 var animate = function () {
     requestAnimationFrame( animate );
