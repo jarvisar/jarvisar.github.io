@@ -29,8 +29,7 @@ camera.rotation.x = -0.61;
 var planeGeo = new THREE.PlaneGeometry(planeSize, planeSize, planeDefinition, planeDefinition);
 var plane = new THREE.Mesh(planeGeo, new THREE.MeshBasicMaterial({
     color: 0xaaaaaa,
-    wireframe: true,
-    wireframeLinewidth: 10
+    wireframe: true
 }));
 plane.rotation.x -= Math.PI * .5;
 
