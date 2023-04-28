@@ -47,10 +47,10 @@ var animate = function () {
 window.onscroll = function(e) {
     // print "false" if direction is down and "true" if up
     if (this.oldScroll > this.scrollY) {
-        var rotationSpeed = 0.0003; // adjust this to control rotation speed
+        var rotationSpeed = 0.00015; // adjust this to control rotation speed
         targetRotation += rotationSpeed * window.scrollY;
     } else {
-        var rotationSpeed = 0.0003; // adjust this to control rotation speed
+        var rotationSpeed = 0.00015; // adjust this to control rotation speed
         targetRotation -= rotationSpeed * window.scrollY;
     }
     
