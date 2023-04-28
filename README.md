@@ -1,2 +1,4 @@
 # jarvisar.github.io
-Online resume and portfolio
+Online resume and portfolio.
+
+Built using [Bootstrap](https://getbootstrap.com/) and [Three.js](https://threejs.org/)
