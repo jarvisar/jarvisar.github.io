@@ -15,7 +15,7 @@ var renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true })
 var divWidth = canvas.clientWidth;
 renderer.setSize( divWidth, divWidth );
 
-var size = 0.7125;
+var size = 0.8;
 // create cube with texture from assets/img/profile-img.jpg
 var geometry = new THREE.BoxGeometry( size, size, size );
 var texture = new THREE.TextureLoader().load( 'assets/img/profile-img.jpg' );
