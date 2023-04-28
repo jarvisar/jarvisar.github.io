@@ -27,14 +27,8 @@ scene.add( cube );
 var light = new THREE.AmbientLight( 0xffffff ); // white light
 scene.add( light );
 
-
-// orbit controls
-var controls = new OrbitControls( camera, canvas );
-controls.enableDamping = true;
-controls.dampingFactor = 0.05;
-controls.screenSpacePanning = false;
-controls.enableZoom = false;
-controls.enablePan = false;
+// look at cube
+camera.lookAt(cube.position);
 
 var currentRotation = 0;
 var targetRotation = 0;
@@ -43,7 +37,6 @@ var maxRotationSpeed = 1; // set the maximum rotation speed
 var animate = function () {
     requestAnimationFrame(animate);
 
-    controls.update();
 
     currentRotation += (targetRotation - currentRotation) * 0.02;
     cube.rotation.y = currentRotation;
@@ -68,11 +61,5 @@ window.onscroll = function(e) {
     
     this.oldScroll = this.scrollY;
 };
-
-var stopRotation = function() {
-    rotationSpeed = 0;
-};
-
-setInterval(stopRotation, 100); // set to stop after 100 milliseconds
 
 animate();
