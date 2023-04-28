@@ -122,7 +122,7 @@ function render() {
         count += 0.1
     }
 
-    camera.rotation.y -= 0.001:
+    camera.rotation.y -= 0.01:
 
     renderer.render(scene, camera);
 }
