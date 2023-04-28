@@ -51,7 +51,7 @@ var plane3 = new THREE.Mesh(plane3Geo, new THREE.MeshBasicMaterial({
     wireframeLinewidth: 1
 }));
 plane3.position.y = -20000;
-plane3.position.x = -10000;
+plane3.position.x = 10000;
 plane3.rotation.x -= Math.PI * .5;
 
 scene.add(plane);

@@ -46,8 +46,8 @@ var animate = function () {
 
 window.onscroll = function(e) {
     // calculate var rotationSpeed based on distance scrolled this.scrollY
-    var rotationSpeed = 0.0001;
-    targetRotation += rotationSpeed * window.scrollY;
+    var rotationSpeed = 0.01;
+    targetRotation += rotationSpeed
     
     // cap the rotation speed
     if (Math.abs(targetRotation - currentRotation) > maxRotationSpeed) {
