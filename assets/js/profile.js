@@ -38,7 +38,7 @@ var animate = function () {
     requestAnimationFrame(animate);
 
 
-    currentRotation += (targetRotation - currentRotation) * 0.02;
+    currentRotation += (targetRotation - currentRotation) * 0.01;
     cube.rotation.y = currentRotation;
 
     renderer.render(scene, camera);
