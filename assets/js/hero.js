@@ -29,7 +29,8 @@ camera.rotation.x = -0.61;
 var planeGeo = new THREE.PlaneGeometry(planeSize, planeSize, planeDefinition, planeDefinition);
 var plane = new THREE.Mesh(planeGeo, new THREE.MeshBasicMaterial({
     color: 0xaaaaaa,
-    wireframe: true
+    wireframe: true,
+    wireframeLinewidth: 1 
 }));
 plane.rotation.x -= Math.PI * .5;
 
@@ -50,10 +51,7 @@ render();
 var count = 0
 function render() {
     requestAnimationFrame(render);
-    // camera.position.z -= 150;
-    var x = camera.position.x;
-    var z = camera.position.z;
-
+    
     for (var i = 0; i < planeGeo.vertices.length; i++) {
         var z = +planeGeo.vertices[i].z;
         var randomOffset = (Math.random() - 0.5) * 10; // generates a random number between -5 and 5
