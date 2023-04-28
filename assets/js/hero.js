@@ -7,7 +7,9 @@ var scene = new THREE.Scene();
 
 const canvas = document.querySelector('.hero-canvas');
 var renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-renderer.setClearColor(0x333333, 1);
+renderer.setClearColor(0x000000, 1);
+// black fog
+scene.fog = new THREE.Fog(0x000000, 1, 350000);
 // get width of canvas
 var divWidth = canvas.clientWidth;
 var divHeight = canvas.clientHeight;
@@ -26,8 +28,9 @@ camera.rotation.x = -0.61;
 
 var planeGeo = new THREE.PlaneGeometry(planeSize, planeSize, planeDefinition, planeDefinition);
 var plane = new THREE.Mesh(planeGeo, new THREE.MeshBasicMaterial({
-    color: 0xbbbbbb,
-    wireframe: true
+    color: 0xaaaaaa,
+    wireframe: true,
+    wireframeLinewidth: 10
 }));
 plane.rotation.x -= Math.PI * .5;
 
@@ -60,8 +63,16 @@ function render() {
     
         count += 0.1
     }
-    
 
     renderer.render(scene, camera);
 }
+
+// on resize
+window.addEventListener('resize', function() {
+    var width = window.innerWidth;
+    var height = window.innerHeight;
+    renderer.setSize(width, height);
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+});
 
