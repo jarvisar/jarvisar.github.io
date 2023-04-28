@@ -34,16 +34,45 @@ controls.enableDamping = true;
 controls.dampingFactor = 0.05;
 controls.screenSpacePanning = false;
 controls.enableZoom = false;
-controls.autoRotate = true;
-controls.autoRotateSpeed = 0.75;
 controls.enablePan = false;
 
+var currentRotation = 0;
+var targetRotation = 0;
+var maxRotationSpeed = 1; // set the maximum rotation speed
+
 var animate = function () {
-    requestAnimationFrame( animate );
+    requestAnimationFrame(animate);
 
     controls.update();
 
-    renderer.render( scene, camera );
+    currentRotation += (targetRotation - currentRotation) * 0.02;
+    cube.rotation.y = currentRotation;
+
+    renderer.render(scene, camera);
 };
+
+window.onscroll = function(e) {
+    // print "false" if direction is down and "true" if up
+    if (this.oldScroll > this.scrollY) {
+        var rotationSpeed = 0.0003; // adjust this to control rotation speed
+        targetRotation += rotationSpeed * window.scrollY;
+    } else {
+        var rotationSpeed = 0.0003; // adjust this to control rotation speed
+        targetRotation -= rotationSpeed * window.scrollY;
+    }
+    
+    // cap the rotation speed
+    if (Math.abs(targetRotation - currentRotation) > maxRotationSpeed) {
+        targetRotation = currentRotation + Math.sign(targetRotation - currentRotation) * maxRotationSpeed;
+    }
+    
+    this.oldScroll = this.scrollY;
+};
+
+var stopRotation = function() {
+    rotationSpeed = 0;
+};
+
+setInterval(stopRotation, 100); // set to stop after 100 milliseconds
 
 animate();
