@@ -284,8 +284,6 @@ h6 {
 #hero {
   width: 100%;
   height: 100vh;
-  background: url("../img/hero-bg.jpg") top right no-repeat;
-  background-size: cover;
   position: relative;
 }
 
@@ -303,6 +301,15 @@ h6 {
   top: 0;
   left: 0;
   right: 0;
+}
+
+.hero-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
 }
 
 #hero h1 {
