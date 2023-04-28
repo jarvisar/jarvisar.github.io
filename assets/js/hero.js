@@ -122,7 +122,6 @@ function render() {
         count += 0.1
     }
 
-
     renderer.render(scene, camera);
 }
 
