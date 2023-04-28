@@ -38,28 +38,22 @@ var animate = function () {
     requestAnimationFrame(animate);
 
 
-    currentRotation += (targetRotation - currentRotation) * 0.01;
+    currentRotation += (targetRotation - currentRotation) * 0.1;
     cube.rotation.y = currentRotation;
 
     renderer.render(scene, camera);
 };
 
 window.onscroll = function(e) {
-    // print "false" if direction is down and "true" if up
-    if (this.oldScroll > this.scrollY) {
-        var rotationSpeed = 0.00015; // adjust this to control rotation speed
-        targetRotation += rotationSpeed * window.scrollY;
-    } else {
-        var rotationSpeed = 0.00015; // adjust this to control rotation speed
-        targetRotation -= rotationSpeed * window.scrollY;
-    }
+    // calculate var rotationSpeed based on distance scrolled this.scrollY
+    var rotationSpeed = 0.0001;
+    targetRotation += rotationSpeed * window.scrollY;
     
     // cap the rotation speed
     if (Math.abs(targetRotation - currentRotation) > maxRotationSpeed) {
         targetRotation = currentRotation + Math.sign(targetRotation - currentRotation) * maxRotationSpeed;
     }
-    
-    this.oldScroll = this.scrollY;
+
 };
 
 animate();
