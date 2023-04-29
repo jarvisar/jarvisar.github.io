@@ -85,8 +85,8 @@ function updatePlane3() {
     }
 };
 
-// camera.position.z = 600000;
-camera.position.z = -300000;
+camera.position.z = 600000;
+// camera.position.z = -300000;
 
 render();
 
