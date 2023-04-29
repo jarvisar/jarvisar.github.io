@@ -85,6 +85,8 @@ function updatePlane3() {
     }
 };
 
+// camera.position.z = 600000;
+camera.position.z = -300000;
 
 render();
 
@@ -120,6 +122,11 @@ function render() {
         plane3.geometry.verticesNeedUpdate = true;
 
         count += 0.1
+    }
+
+    // move camera forward if not at very edge
+    if (camera.position.z > -300000){
+        camera.position.z -= 20;
     }
 
     renderer.render(scene, camera);
