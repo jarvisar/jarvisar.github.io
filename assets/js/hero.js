@@ -9,7 +9,7 @@ const canvas = document.querySelector('.hero-canvas');
 var renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
 renderer.setClearColor(0x000000, 1);
 // black fog
-scene.fog = new THREE.Fog(0x000000, 1, 450000);
+scene.fog = new THREE.Fog(0x000000, 1, 480000);
 // get width of canvas
 var divWidth = canvas.clientWidth;
 var divHeight = canvas.clientHeight;
