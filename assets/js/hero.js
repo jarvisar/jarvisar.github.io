@@ -9,7 +9,7 @@ const canvas = document.querySelector('.hero-canvas');
 var renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
 renderer.setClearColor(0x000000, 1);
 // black fog
-scene.fog = new THREE.Fog(0x000000, 1, 480000);
+scene.fog = new THREE.Fog(0x000000, 1, 350000);
 // get width of canvas
 var divWidth = canvas.clientWidth;
 var divHeight = canvas.clientHeight;
@@ -21,7 +21,7 @@ var vertexHeight = 15000,
 
 var camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 1, 400000)
 camera.position.z = 10000;
-camera.position.y = 70000;
+camera.position.y = 50000;
 
 // look at a downward angle to the right
 camera.rotation.x = -0.61;
@@ -126,7 +126,7 @@ function render() {
 
     // move camera forward if not at very edge
     if (camera.position.z > -300000){
-        camera.position.z -= 25;
+        camera.position.z -= 20;
     }
 
     renderer.render(scene, camera);
