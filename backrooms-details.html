@@ -88,7 +88,8 @@
               <h2>About</h2>
               <p>
                 This project is inspired by the creepypasta "The Backrooms", which describes a world that is a seemingly endless maze of yellow rooms. To recreate this, I used Three.js to create a procedurally generated maze of eerily empty rooms using primarily <a href="https://en.wikipedia.org/wiki/Maze_generation_algorithm#Iterative_randomized_Prim's_algorithm_(without_stack,_without_sets)" target="_blank">Prim's algorithm</a>.
-                The maze infinitely generates as the player moves through it, while the player moves using WASD controls. Infinite procedural generation is achieved by using a system of offset corrdinates and 2D array of mazes, which themselves are 2D arrays of rooms. This can be performance intensive, so the program includes several settingsd to adjust the maze generation and rendering to improve performance.
+                The player uses WASD to move and the maze will continue to generate as the player moves through the world. Infinite procedural generation is achieved by using a system of offset corrdinates and 2D array of mazes, which themselves are 2D arrays of rooms. This can be performance intensive, so the program includes generative optimizations and several configurable settings to adjust the maze generation and rendering to improve performance.
+                To create a retro effect and feel of being lost in a maze, I also implemented several GLSL shaders that add a CRT effect, vignette, and RGB color shifting. These shaders were primarily created by <a href="https://github.com/felixturner/" target="_blank">@felixturner</a> on GitHub.
               </p>
             </div>
           </div>
