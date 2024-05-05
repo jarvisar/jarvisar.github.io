@@ -1,6 +1,6 @@
-import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.149.0/examples/jsm/loaders/GLTFLoader'
-import { OrbitControls } from "https://unpkg.com/three@0.138.0/examples/jsm/controls/OrbitControls.js"
-import * as THREE from "https://cdn.skypack.dev/three@0.149.0";
+import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.140.0/examples/jsm/loaders/GLTFLoader'
+import { OrbitControls } from "https://unpkg.com/three@0.140.0/examples/jsm/controls/OrbitControls.js"
+import * as THREE from "https://unpkg.com/three@0.140.0/build/three.module.js";
 
 // load computer glb using threejs, and put in div id=3d 
 var scene = new THREE.Scene();
