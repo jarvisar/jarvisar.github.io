@@ -1,4 +1,4 @@
-# jarvisar.github.io
+# ajarvis.co
 Online resume and portfolio.
 
 Built using [Bootstrap](https://getbootstrap.com/) and [Three.js](https://threejs.org/)
