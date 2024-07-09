@@ -1072,7 +1072,7 @@ section {
 .scroll-prompt {
 	position: fixed;
 	z-index: 998;
-	bottom: -80px;
+	bottom: -60px;
 	left: 50%;
 	margin-left: -80px;
 	width: 160px;
@@ -1098,10 +1098,10 @@ section {
 		margin-top: -6px;
 	}
 	.scroll-prompt-arrow > div {
-		width: 36px;
-		height: 36px;
-		border-right: 8px solid #fff;
-		border-bottom: 8px solid #fff;
+		width: 24px;
+		height: 24px;
+		border-right: 4px solid #fff;
+		border-bottom: 4px solid #fff;
 		transform: rotate(45deg) translateZ(1px);
 	}
 }
@@ -1157,43 +1157,44 @@ section {
 		transform: translateY(0);
 	}
 
-	10% {
-		transform: translateY(3px);
-	}
+  10% {
+    transform: translateY(1.8px);
+  }
 
-	20% {
-		transform: translateY(6px);
-	}
+  20% {
+    transform: translateY(3.6px);
+  }
 
-	30% {
-		transform: translateY(9px);
-	}
+  30% {
+    transform: translateY(5.4px);
+  }
 
-	40% {
-		transform: translateY(12px);
-	}
+  40% {
+    transform: translateY(7.2px);
+  }
 
-	50% {
-		transform: translateY(15px);
-	}
+  50% {
+    transform: translateY(9px);
+  }
 
-	60% {
-		transform: translateY(18px);
-	}
+  60% {
+    transform: translateY(10.8px);
+  }
 
-	70% {
-		transform: translateY(21px);
-	}
+  70% {
+    transform: translateY(12.6px);
+  }
 
-	80% {
-		transform: translateY(24px);
-	}
+  80% {
+    transform: translateY(14.4px);
+  }
 
-	90% {
-		transform: translateY(27px);
-	}
+  90% {
+    transform: translateY(16.2px);
+  }
+
 
 	100% {
-		transform: translateY(30px);
+		transform: translateY(18px);
 	}
 }
