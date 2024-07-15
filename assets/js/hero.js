@@ -64,7 +64,7 @@ updatePlane3();
 
 
 function updatePlane() {
-    console.log(planeGeo)
+    
     for (var i = 0; i < planeGeo.vertices.length; i++) {
         planeGeo.vertices[i].z += Math.random() * vertexHeight * 1.5 - vertexHeight;
         planeGeo.vertices[i]._myZ = planeGeo.vertices[i].z
