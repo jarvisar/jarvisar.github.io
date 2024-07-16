@@ -48,10 +48,6 @@
     }
   });
 
-  // add new event listener, if user is at top of the page, set opacity of html elemtn id="scroll-prompt" to 1
-  // if user is not at top of the page, set opacity of html element id="scroll-prompt" to 0
-// how to do this? Do we need event lsitener?
-
   document.addEventListener("scroll", function() {
     if (window.scrollY === 0) {
       document.getElementById("scroll-prompt").style.opacity = 1;
@@ -62,9 +58,7 @@
       document.getElementById("scroll-prompt").style.pointerEvents = "none";
     }
   });
-
-  // another event listener, clicking on scroll prompt scrolls down a screen
-
+  
   document.getElementById("scroll-prompt")?.addEventListener("click", function() {
     // if at top of page, scroll down a screen
     if (window.scrollY === 0) {
@@ -72,12 +66,8 @@
       
     }
     document.getElementById("scroll-prompt").style.opacity = 0;
-      document.getElementById("scroll-prompt").style.pointerEvents = "none";
-
-    
+    document.getElementById("scroll-prompt").style.pointerEvents = "none";
   });
-
-
 
   /**
    * Easy on scroll event listener 
