@@ -1268,7 +1268,10 @@ section {
   background-color: #f9f9f9;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  padding-bottom: 5px;
   animation: fadeIn 0.5s;
 }
 
@@ -1276,6 +1279,7 @@ section {
   color: black;
   padding: 12px 16px;
   text-decoration: none;
+  text-align: left;
   display: block;
 }
 
@@ -1298,5 +1302,4 @@ section {
 
 .contact .php-email-form {
   position: relative;
-  z-index: 2;
 }
