@@ -65,7 +65,7 @@
 
   // another event listener, clicking on scroll prompt scrolls down a screen
 
-  document.getElementById("scroll-prompt").addEventListener("click", function() {
+  document.getElementById("scroll-prompt")?.addEventListener("click", function() {
     // if at top of page, scroll down a screen
     if (window.scrollY === 0) {
       window.scrollBy(0, window.innerHeight);
