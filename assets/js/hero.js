@@ -141,3 +141,23 @@ window.addEventListener('resize', function() {
     camera.updateProjectionMatrix();
 });
 
+// change color of wireframe on top plane on hover (dark gray). only change color of vertex(s) and edge(s) that are hovered over, and have the dark gray blend in with the normal wireframe color where the user isnt hovering
+canvas.addEventListener('mousemove', function(event) {
+    var rect = canvas.getBoundingClientRect();
+    var x = event.clientX - rect.left;
+    var y = event.clientY - rect.top;
+
+    var mouseX = (x / divWidth) * 2 - 1;
+    var mouseY = -(y / divHeight) * 2 + 1;
+
+    var vector = new THREE.Vector3(mouseX, mouseY, 0.5);
+    vector.unproject(camera);
+
+    var raycaster = new THREE.Raycaster(camera.position, vector.sub(camera.position).normalize());
+    var intersects = raycaster.intersectObject(plane);
+
+    for (var i = 0; i < intersects.length; i++) {
+        intersects[i].face.color.setHex(0x333333);
+        intersects[i].object.geometry.colorsNeedUpdate = true;
+    }
+}, false);
