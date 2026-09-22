@@ -16,76 +16,113 @@ function initHero(THREE) {
     const renderer = new THREE.WebGLRenderer({
         canvas,
         alpha: true,
-        antialias: !lightweight,
+        antialias: false,
+        depth: false,
+        stencil: false,
         powerPreference: 'low-power'
     });
     renderer.setClearColor(0x000000, 0);
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(55, 1, 1, 400);
-    camera.position.set(0, 50, 580);
-    camera.rotation.x = -0.61;
+    const camera = new THREE.Camera();
 
-    // Parallel contours form a wave surface without a crossing wireframe grid.
-    // The buffer stays static; only a time uniform changes per frame.
-    const columns = lightweight ? 64 : 96;
-    const rows = lightweight ? 32 : 48;
+    // Each contour is a thin strip, giving consistent, softly antialiased lines
+    // without multisampling, textures, or post-processing. All strips share one draw.
+    const columns = lightweight ? 96 : 144;
+    const rows = lightweight ? 28 : 44;
     const vertices = [];
-    const colors = [];
     const indices = [];
-    const palette = [0x8eaac7, 0xd6a09a, 0xdfca91, 0xa2b8a0].map(hex => new THREE.Color(hex));
-    for (let row = 0; row <= rows; row++) {
-        const color = palette[row % palette.length];
+    for (let row = 0; row < rows; row++) {
         for (let column = 0; column <= columns; column++) {
-            vertices.push((column / columns - 0.5) * 900, row / rows * 500 - 650, 0);
-            colors.push(color.r, color.g, color.b);
+            const u = column / columns;
+            const v = row / (rows - 1);
+            vertices.push(u, v, -1, u, v, 1);
             if (column < columns) {
-                const index = row * (columns + 1) + column;
-                indices.push(index, index + 1);
+                const index = (row * (columns + 1) + column) * 2;
+                indices.push(index, index + 2, index + 1, index + 1, index + 2, index + 3);
             }
         }
     }
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
-    geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
     geometry.setIndex(indices);
-    geometry.computeBoundingSphere();
-    // Include the maximum shader displacement in the culling bounds.
-    geometry.boundingSphere.radius += 24;
 
     const time = { value: 0 };
+    const uniforms = {
+        time,
+        resolution: { value: new THREE.Vector2(1, 1) },
+        compact: { value: 0 },
+        lineWidth: { value: 1.2 },
+        ink: { value: new THREE.Color(0x9db6ac) },
+        mist: { value: new THREE.Color(0x627f75) }
+    };
     const material = new THREE.ShaderMaterial({
-        vertexColors: true,
         transparent: true,
+        depthTest: false,
         depthWrite: false,
-        uniforms: {
-            time
-        },
+        uniforms,
         vertexShader: `
             uniform float time;
-            varying float depth;
-            varying vec3 waveColor;
+            uniform float compact;
+            uniform float lineWidth;
+            uniform vec2 resolution;
+            varying float edgeDistance;
+            varying vec2 contour;
+            varying vec2 screenPoint;
+
+            vec2 wave(float u, float v) {
+                float x = mix(-0.12, 1.12, u);
+                // Two traveling swells create a rolling surface. Row spacing
+                // stays positive, so the contours never cross into a grid.
+                float swell = sin(x * 5.6 + v * 2.0 - time * 0.48) * 0.115;
+                float ripple = sin(x * 10.0 - v * 2.4 + time * 0.30) * 0.038;
+                float y = -0.12 + v * 0.62 + swell + ripple;
+                y += smoothstep(0.15, 0.95, x) * 0.10;
+                y = y * (1.0 - compact * 0.32) - compact * 0.04;
+                return vec2(x, y) * 2.0 - 1.0;
+            }
+
             void main() {
-                vec3 p = position;
-                p.z += sin(p.x * 0.022 + p.y * 0.009 + time * 0.45) * 14.0;
-                p.z += cos(p.x * 0.035 - p.y * 0.006 - time * 0.3) * 7.0;
-                vec4 viewPosition = modelViewMatrix * vec4(p, 1.0);
-                depth = -viewPosition.z;
-                waveColor = color;
-                gl_Position = projectionMatrix * viewPosition;
+                vec2 point = wave(position.x, position.y);
+                vec2 next = wave(position.x + 0.001, position.y);
+                vec2 tangent = normalize((next - point) * resolution);
+                vec2 normal = vec2(-tangent.y, tangent.x);
+                float halfWidth = lineWidth * 0.5 + 0.8;
+                screenPoint = point * 0.5 + 0.5;
+                point += normal * position.z * halfWidth * 2.0 / resolution;
+                edgeDistance = position.z * halfWidth;
+                contour = vec2(position.x, position.y);
+                gl_Position = vec4(point, 0.0, 1.0);
             }
         `,
         fragmentShader: `
-            varying float depth;
-            varying vec3 waveColor;
+            uniform float lineWidth;
+            uniform vec3 ink;
+            uniform vec3 mist;
+            varying float edgeDistance;
+            varying vec2 contour;
+            varying vec2 screenPoint;
             void main() {
-                float fog = smoothstep(35.0, 330.0, depth);
-                gl_FragColor = vec4(waveColor, (1.0 - fog) * 0.65);
+                float coverage = 1.0 - smoothstep(
+                    max(0.0, lineWidth * 0.5 - 0.6),
+                    lineWidth * 0.5 + 0.6,
+                    abs(edgeDistance)
+                );
+                // Fade the ends and outer contours into the background.
+                float ends = smoothstep(0.04, 0.30, contour.x)
+                    * (1.0 - smoothstep(0.91, 1.0, contour.x));
+                float edges = smoothstep(0.0, 0.16, contour.y)
+                    * (1.0 - smoothstep(0.80, 1.0, contour.y));
+                float textSpace = smoothstep(0.26, 0.54, screenPoint.y)
+                    * (1.0 - smoothstep(0.28, 0.66, screenPoint.x));
+                vec3 color = mix(ink, mist, contour.y * 0.65);
+                gl_FragColor = vec4(color, coverage * ends * edges * (1.0 - textSpace * 0.85) * 0.66);
             }
         `
     });
-    const waves = new THREE.LineSegments(geometry, material);
-    waves.rotation.x = -Math.PI * 0.5;
+    const waves = new THREE.Mesh(geometry, material);
+    // Positions are composed in clip space, independently of the camera.
+    waves.frustumCulled = false;
     scene.add(waves);
 
     let visible = false;
@@ -127,8 +164,11 @@ function initHero(THREE) {
         // Never render at retina resolution; also cap the cost of large monitors.
         const scale = Math.min(1, Math.sqrt(pixelBudget / (width * height)));
         renderer.setSize(Math.floor(width * scale), Math.floor(height * scale), false);
-        camera.aspect = width / height;
-        camera.updateProjectionMatrix();
+        renderer.getDrawingBufferSize(uniforms.resolution.value);
+        // Centered text needs room in landscape as well as portrait layouts.
+        uniforms.compact.value = width <= 992 ? 1 :
+            Math.min(1, Math.max(0, (1.25 - width / height) / 0.55));
+        uniforms.lineWidth.value = 1.2 * scale;
         if (visible && !document.hidden) draw();
     }
 
