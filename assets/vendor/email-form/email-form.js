@@ -9,7 +9,7 @@ window.addEventListener("DOMContentLoaded", function() {
     
     function success() {
       form.reset();
-      status.style = "margin-top: 35px; color: #fff; background: #18d26e; text-align: center; padding: 15px; font-weight: 600;";
+      status.style = "margin-top: 35px; color: #fff; background: var(--color-forest); text-align: center; padding: 15px; font-weight: 600;";
       status.innerHTML = "Your message has been sent!";
     }
 

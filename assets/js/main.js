@@ -34,6 +34,8 @@
     }
   }
 
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
   const konamiCode = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "KeyB", "KeyA"];
   let konamiIndex = 0;
 
@@ -103,7 +105,7 @@
     let elementPos = select(el).offsetTop
     window.scrollTo({
       top: elementPos,
-      behavior: 'smooth'
+      behavior: reducedMotion ? 'auto' : 'smooth'
     })
   }
 
@@ -126,10 +128,24 @@
   /**
    * Mobile nav toggle
    */
+  const setMobileNav = (open) => {
+    let navbarToggle = select('.mobile-nav-toggle')
+    if (!navbarToggle) return
+    select('body').classList.toggle('mobile-nav-active', open)
+    navbarToggle.setAttribute('aria-expanded', open)
+    navbarToggle.querySelector('i').classList.toggle('bi-list', !open)
+    navbarToggle.querySelector('i').classList.toggle('bi-x', open)
+  }
+
   on('click', '.mobile-nav-toggle', function(e) {
-    select('body').classList.toggle('mobile-nav-active')
-    this.classList.toggle('bi-list')
-    this.classList.toggle('bi-x')
+    setMobileNav(!select('body').classList.contains('mobile-nav-active'))
+  })
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && select('body').classList.contains('mobile-nav-active')) {
+      setMobileNav(false)
+      select('.mobile-nav-toggle').focus()
+    }
   })
 
   /**
@@ -139,12 +155,8 @@
     if (select(this.hash)) {
       e.preventDefault()
 
-      let body = select('body')
-      if (body.classList.contains('mobile-nav-active')) {
-        body.classList.remove('mobile-nav-active')
-        let navbarToggle = select('.mobile-nav-toggle')
-        navbarToggle.classList.toggle('bi-list')
-        navbarToggle.classList.toggle('bi-x')
+      if (select('body').classList.contains('mobile-nav-active')) {
+        setMobileNav(false)
       }
       scrollto(this.hash)
     }
@@ -178,7 +190,9 @@
   if (typed) {
     let typed_strings = typed.getAttribute('data-typed-items')
     typed_strings = typed_strings.split(',')
-    new Typed('.typed', {
+    if (reducedMotion) {
+      typed.textContent = typed_strings[0]
+    } else new Typed('.typed', {
       strings: typed_strings,
       loop: true,
       typeSpeed: 100,
@@ -256,9 +270,10 @@
   new Swiper('.portfolio-details-slider', {
     speed: 400,
     loop: true,
-    autoplay: {
+    autoplay: reducedMotion ? false : {
       delay: 5000,
-      disableOnInteraction: false
+      disableOnInteraction: false,
+      pauseOnMouseEnter: true
     },
     pagination: {
       el: '.swiper-pagination',
