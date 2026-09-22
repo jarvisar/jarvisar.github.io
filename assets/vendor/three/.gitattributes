@@ -1,0 +1,3 @@
+# Preserve upstream bytes so the documented checksum remains reproducible.
+three-r140.module.js -text
+LICENSE -text

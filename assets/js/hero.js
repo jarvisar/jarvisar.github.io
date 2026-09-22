@@ -1,163 +1,173 @@
-import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.149.0/examples/jsm/loaders/GLTFLoader'
-import { OrbitControls } from "https://unpkg.com/three@0.138.0/examples/jsm/controls/OrbitControls.js"
-import * as THREE from "https://cdn.skypack.dev/three@0.88.0";
-
-// load computer glb using threejs, and put in div id=3d 
-var scene = new THREE.Scene();
-
 const canvas = document.querySelector('.hero-canvas');
-var renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-renderer.setClearColor(0x000000, 1);
-// black fog
-scene.fog = new THREE.Fog(0x000000, 1, 350000);
-// get width of canvas
-var divWidth = canvas.clientWidth;
-var divHeight = canvas.clientHeight;
-renderer.setSize( divWidth, divHeight );
 
-var vertexHeight = 15000,
-    planeDefinition = 100,
-    planeSize = 1245000;
-
-var camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 1, 400000)
-camera.position.z = 10000;
-camera.position.y = 50000;
-
-// look at a downward angle to the right
-camera.rotation.x = -0.61;
-
-var planeGeo = new THREE.PlaneGeometry(planeSize, planeSize, planeDefinition, planeDefinition);
-var plane = new THREE.Mesh(planeGeo, new THREE.MeshBasicMaterial({
-    color: 0xaaaaaa,
-    wireframe: true,
-    wireframeLinewidth: 1 
-}));
-plane.rotation.x -= Math.PI * .5;
-
-var plane2Geo = new THREE.PlaneGeometry(planeSize, planeSize, planeDefinition, planeDefinition);
-var plane2 = new THREE.Mesh(plane2Geo, new THREE.MeshBasicMaterial({
-    color: 0x333333,
-    wireframe: true,
-    wireframeLinewidth: 1 
-}));
-plane2.position.y = -10000; 
-plane2.position.x = 7000;
-plane2.rotation.x -= Math.PI * .5;
-
-var plane3Geo = new THREE.PlaneGeometry(planeSize, planeSize, planeDefinition, planeDefinition);
-var plane3 = new THREE.Mesh(plane3Geo, new THREE.MeshBasicMaterial({
-    color: 0x666666,
-    wireframe: true,
-    wireframeLinewidth: 1
-}));
-plane3.position.y = -20000;
-plane3.position.x = 10000;
-plane3.rotation.x -= Math.PI * .5;
-
-scene.add(plane);
-scene.add(plane2);
-scene.add(plane3);
-
-updatePlane();
-updatePlane2();
-updatePlane3();
-
-
-function updatePlane() {
-    
-    for (var i = 0; i < planeGeo.vertices.length; i++) {
-        planeGeo.vertices[i].z += Math.random() * vertexHeight * 1.5 - vertexHeight;
-        planeGeo.vertices[i]._myZ = planeGeo.vertices[i].z
-    }
-};
-
-function updatePlane2() {
-    for (var i = 0; i < plane2Geo.vertices.length; i++) {
-        plane2Geo.vertices[i].z += Math.random() * vertexHeight * 1.5 - vertexHeight;
-        plane2Geo.vertices[i]._myZ = plane2Geo.vertices[i].z
-    }
-};
-
-function updatePlane3() {
-    for (var i = 0; i < plane3Geo.vertices.length; i++) {
-        plane3Geo.vertices[i].z += Math.random() * vertexHeight * 1.5 - vertexHeight;
-        plane3Geo.vertices[i]._myZ = plane3Geo.vertices[i].z
-    }
-};
-
-camera.position.z = 600000;
-// camera.position.z = -300000;
-
-render();
-
-var count = 0
-function render() {
-    requestAnimationFrame(render);
-    
-    // update vertices of first plane
-    for (var i = 0; i < planeGeo.vertices.length; i++) {
-        var z = +planeGeo.vertices[i].z;
-        var randomOffset = (Math.random() - 0.5) * 10;
-        planeGeo.vertices[i].z = Math.sin(( i + count * 0.000001)) * (planeGeo.vertices[i]._myZ - (planeGeo.vertices[i]._myZ* 0.4)) + randomOffset;
-        plane.geometry.verticesNeedUpdate = true;
-    
-        count += 0.1
-    }
-
-    // update vertices of second plane
-    for (var i = 0; i < plane2Geo.vertices.length; i++) {
-        var z = +plane2Geo.vertices[i].z;
-        var randomOffset = (Math.random() - 0.5) * 10;
-        plane2Geo.vertices[i].z = Math.cos(( i + count * 0.00000075)) * (plane2Geo.vertices[i]._myZ - (plane2Geo.vertices[i]._myZ* 0.5)) + randomOffset;
-        plane2.geometry.verticesNeedUpdate = true;
-    
-        count += 0.1
-    }
-
-    // update vertices of third plane
-    for (var i = 0; i < plane3Geo.vertices.length; i++) {
-        var z = +plane3Geo.vertices[i].z;
-        var randomOffset = (Math.random() - 0.5) * 10;
-        plane3Geo.vertices[i].z = Math.sin(( i + count * 0.0000005)) * (plane3Geo.vertices[i]._myZ - (plane3Geo.vertices[i]._myZ* 0.6)) + randomOffset;
-        plane3.geometry.verticesNeedUpdate = true;
-
-        count += 0.1
-    }
-
-    // move camera forward if not at very edge
-    if (camera.position.z > -300000){
-        camera.position.z -= 20;
-    }
-
-    renderer.render(scene, camera);
+// Keep the CSS background if WebGL or the module is unavailable.
+if (canvas) {
+    import('three').then(THREE => initHero(THREE)).catch(() => {
+        canvas.hidden = true;
+    });
 }
 
-// on resize
-window.addEventListener('resize', function() {
-    var width = window.innerWidth;
-    var height = window.innerHeight;
-    renderer.setSize(width, height);
-    camera.aspect = width / height;
-    camera.updateProjectionMatrix();
-});
+function initHero(THREE) {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const lightweight = window.matchMedia('(max-width: 767px)').matches ||
+        navigator.hardwareConcurrency <= 4 || navigator.deviceMemory <= 4;
+    const frameInterval = 1000 / (lightweight ? 20 : 30);
+    const pixelBudget = lightweight ? 650000 : 1400000;
+    const renderer = new THREE.WebGLRenderer({
+        canvas,
+        alpha: true,
+        antialias: !lightweight,
+        powerPreference: 'low-power'
+    });
+    renderer.setClearColor(0x000000, 0);
 
-// change color of wireframe on top plane on hover (dark gray). only change color of vertex(s) and edge(s) that are hovered over, and have the dark gray blend in with the normal wireframe color where the user isnt hovering
-canvas.addEventListener('mousemove', function(event) {
-    var rect = canvas.getBoundingClientRect();
-    var x = event.clientX - rect.left;
-    var y = event.clientY - rect.top;
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(55, 1, 1, 400);
+    camera.position.set(0, 50, 580);
+    camera.rotation.x = -0.61;
 
-    var mouseX = (x / divWidth) * 2 - 1;
-    var mouseY = -(y / divHeight) * 2 + 1;
-
-    var vector = new THREE.Vector3(mouseX, mouseY, 0.5);
-    vector.unproject(camera);
-
-    var raycaster = new THREE.Raycaster(camera.position, vector.sub(camera.position).normalize());
-    var intersects = raycaster.intersectObject(plane);
-
-    for (var i = 0; i < intersects.length; i++) {
-        intersects[i].face.color.setHex(0x333333);
-        intersects[i].object.geometry.colorsNeedUpdate = true;
+    // Parallel contours form a wave surface without a crossing wireframe grid.
+    // The buffer stays static; only a time uniform changes per frame.
+    const columns = lightweight ? 64 : 96;
+    const rows = lightweight ? 32 : 48;
+    const vertices = [];
+    const colors = [];
+    const indices = [];
+    const palette = [0x8eaac7, 0xd6a09a, 0xdfca91, 0xa2b8a0].map(hex => new THREE.Color(hex));
+    for (let row = 0; row <= rows; row++) {
+        const color = palette[row % palette.length];
+        for (let column = 0; column <= columns; column++) {
+            vertices.push((column / columns - 0.5) * 900, row / rows * 500 - 650, 0);
+            colors.push(color.r, color.g, color.b);
+            if (column < columns) {
+                const index = row * (columns + 1) + column;
+                indices.push(index, index + 1);
+            }
+        }
     }
-}, false);
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+    geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+    geometry.setIndex(indices);
+    geometry.computeBoundingSphere();
+    // Include the maximum shader displacement in the culling bounds.
+    geometry.boundingSphere.radius += 24;
+
+    const time = { value: 0 };
+    const material = new THREE.ShaderMaterial({
+        vertexColors: true,
+        transparent: true,
+        depthWrite: false,
+        uniforms: {
+            time
+        },
+        vertexShader: `
+            uniform float time;
+            varying float depth;
+            varying vec3 waveColor;
+            void main() {
+                vec3 p = position;
+                p.z += sin(p.x * 0.022 + p.y * 0.009 + time * 0.45) * 14.0;
+                p.z += cos(p.x * 0.035 - p.y * 0.006 - time * 0.3) * 7.0;
+                vec4 viewPosition = modelViewMatrix * vec4(p, 1.0);
+                depth = -viewPosition.z;
+                waveColor = color;
+                gl_Position = projectionMatrix * viewPosition;
+            }
+        `,
+        fragmentShader: `
+            varying float depth;
+            varying vec3 waveColor;
+            void main() {
+                float fog = smoothstep(35.0, 330.0, depth);
+                gl_FragColor = vec4(waveColor, (1.0 - fog) * 0.65);
+            }
+        `
+    });
+    const waves = new THREE.LineSegments(geometry, material);
+    waves.rotation.x = -Math.PI * 0.5;
+    scene.add(waves);
+
+    let visible = false;
+    let contextLost = false;
+    let frame = 0;
+    let lastFrame = 0;
+    let lastTick = 0;
+
+    function draw() {
+        renderer.render(scene, camera);
+    }
+
+    function animate(now) {
+        frame = requestAnimationFrame(animate);
+        const elapsed = now - lastFrame;
+        if (elapsed < frameInterval) return;
+        // Frame-rate independent motion; paused time never jumps the scene.
+        time.value += Math.min((now - lastTick) / 1000, 0.1);
+        lastTick = now;
+        lastFrame = now - elapsed % frameInterval;
+        draw();
+    }
+
+    function updateAnimation() {
+        cancelAnimationFrame(frame);
+        frame = 0;
+        if (!visible || document.hidden || contextLost) return;
+        draw();
+        if (!reducedMotion.matches) {
+            lastFrame = lastTick = performance.now();
+            frame = requestAnimationFrame(animate);
+        }
+    }
+
+    function resize() {
+        const width = canvas.clientWidth;
+        const height = canvas.clientHeight;
+        if (!width || !height || contextLost) return;
+        // Never render at retina resolution; also cap the cost of large monitors.
+        const scale = Math.min(1, Math.sqrt(pixelBudget / (width * height)));
+        renderer.setSize(Math.floor(width * scale), Math.floor(height * scale), false);
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        if (visible && !document.hidden) draw();
+    }
+
+    if ('ResizeObserver' in window) {
+        new ResizeObserver(resize).observe(canvas);
+    } else {
+        window.addEventListener('resize', resize, { passive: true });
+    }
+    if ('IntersectionObserver' in window) {
+        new IntersectionObserver(entries => {
+            visible = entries[0].isIntersecting;
+            updateAnimation();
+        }).observe(canvas);
+    } else {
+        visible = true;
+    }
+    document.addEventListener('visibilitychange', updateAnimation);
+    window.addEventListener('pagehide', () => {
+        cancelAnimationFrame(frame);
+        frame = 0;
+    });
+    window.addEventListener('pageshow', updateAnimation);
+    if (reducedMotion.addEventListener) {
+        reducedMotion.addEventListener('change', updateAnimation);
+    } else {
+        reducedMotion.addListener(updateAnimation);
+    }
+    canvas.addEventListener('webglcontextlost', event => {
+        event.preventDefault();
+        contextLost = true;
+        canvas.style.visibility = 'hidden';
+        updateAnimation();
+    });
+    canvas.addEventListener('webglcontextrestored', () => {
+        contextLost = false;
+        canvas.style.visibility = '';
+        resize();
+        updateAnimation();
+    });
+    resize();
+    updateAnimation();
+}

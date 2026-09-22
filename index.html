@@ -34,7 +34,7 @@
 
 	<script  type="importmap">{
 		"imports": {
-			"three": "https://unpkg.com/three@0.140.0/build/three.module.js"
+			"three": "./assets/vendor/three/three-r140.module.js"
 		}
 	}</script>
 
@@ -72,7 +72,7 @@
   <section id="hero" class="d-flex flex-column justify-content-center">
     <div class="container" data-aos="zoom-out-right" data-aos-delay="50" >
       <h1>Adam Jarvis</h1>
-      <p>I'm a <span class="typed" data-typed-items="Software Engineer, Full-Stack Developer, Backend Developer, Mapping Tools Developer, 3D Modeler"></span></p>
+      <p>I'm a <span class="typed" data-typed-items="Software Engineer, Full-Stack Developer, Backend Developer, Mapping Tools Developer, 3D Modeler, Creative Technologist, Tool Builder, Problem Solver"></span></p>
       <div class="social-links">
         <a href="./assets/AdamJarvisResume.pdf" target="_blank" rel="noreferrer" title="Resume"  ><svg xmlns="http://www.w3.org/2000/svg" width="1.4em" height="1.4em" style="margin-right: 8px" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M4.998 9V1H19.5L23 4.5V23h-7m2-22v5h5M8 11a3 3 0 1 0 0 6a3 3 0 0 0 0-6ZM3 23v-1c0-4 3-5 5-5s5 1 5 5v1z"/></svg></a>
         <a href="https://github.com/jarvisar" class="google-github" title="GitHub"><svg xmlns="http://www.w3.org/2000/svg" width="1.1em" height="1.1em" style="margin-bottom: 1px" viewBox="0 0 16 16"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59c.4.07.55-.17.55-.38c0-.19-.01-.82-.01-1.49c-2.01.37-2.53-.49-2.69-.94c-.09-.23-.48-.94-.82-1.13c-.28-.15-.68-.52-.01-.53c.63-.01 1.08.58 1.23.82c.72 1.21 1.87.87 2.33.66c.07-.52.28-.87.51-1.07c-1.78-.2-3.64-.89-3.64-3.95c0-.87.31-1.59.82-2.15c-.08-.2-.36-1.02.08-2.12c0 0 .67-.21 2.2.82c.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82c.44 1.1.16 1.92.08 2.12c.51.56.82 1.27.82 2.15c0 3.07-1.87 3.75-3.65 3.95c.29.25.54.73.54 1.48c0 1.07-.01 1.93-.01 2.2c0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/></svg></a>
@@ -91,10 +91,10 @@
           <div class="scroll-prompt-arrow"><div></div></div>
       </div>
   </div>
-    <canvas class="hero-canvas"> </canvas>
+    <canvas class="hero-canvas" aria-hidden="true"></canvas>
   </section><!-- End Hero -->
 
-  <main id="main">
+  <main id="main" class="home-sections">
 
     <!-- ======= About Section ======= -->
     <section id="about" class="about">
@@ -144,7 +144,7 @@
     </section><!-- End About Section -->
 
     <!-- ======= Skills Section ======= -->
-    <section id="skills" class="skills section-bg">
+    <section id="skills" class="skills">
       <div class="container" data-aos="fade-up">
         <div class="section-title">
           <h2>Skills</h2>
@@ -330,14 +330,10 @@
             </div>
           </div>
         </div>
-          <br>
-          <br>
           <div class="php-email-form">
-            <div class="text-center" style="background: #f7f7f7; padding: 20px;">
+            <div class="text-center resume-download">
               <div class="dropdown">
-                <a href='./assets/AdamJarvisResume.pdf' target="_blank">
-                  <button class="dropbtn">Download Resume</button>
-                </a>
+                <a class="dropbtn" href='./assets/AdamJarvisResume.pdf' target="_blank" rel="noreferrer">Download Resume</a>
                 <div class="dropdown-content">
                   <a href='./assets/AdamJarvisResume.pdf' target="_blank">.PDF Format</a>
                   <a href='./assets/AdamJarvisResume.docx'>.DOCX Format</a>
@@ -345,15 +341,12 @@
               </div>
             </div>
           </div>
-          <br>
-          <br>
       </div>
     </section><!-- End Resume Section -->
 
     <!-- ======= Portfolio Section ======= -->
-    <section id="portfolio" class="portfolio section-bg">
+    <section id="portfolio" class="portfolio">
       <div class="container" data-aos="fade-up">
-      <br>
         <div class="section-title">
           <h2>Projects & Portfolio</h2>
           <p>A selection of software, web, visualization, mapping, and 3D-design projects I've built and maintained over the years.</p>
@@ -363,12 +356,12 @@
 
           <div class="col-lg-4 col-md-6 portfolio-item">
             <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-1.jpg" class="img-fluid" alt="">
+              <img src="assets/img/portfolio/exoplanet-cover.jpg" class="img-fluid" alt="NASA Exoplanet Search with a magnifying glass and planet" width="1200" height="675" decoding="async">
               <div class="portfolio-info">
                 <h4>NASA Exoplanet Archive Search</h4>
                 <p>Capstone / Data Visualization</p>
                 <div class="portfolio-links">
-                  <a href="exoplant-search-details.html" class="portfolio-details-lightbox" data-glightbox="type: external" title="Additional Details"><i class="bx bx-plus"></i>
+                  <a href="exoplant-search-details.html" class="portfolio-details-lightbox stretched-link" data-glightbox="type: external" title="Additional Details" aria-label="View NASA Exoplanet Archive Search details"><i class="bx bx-plus"></i></a>
                   <a href="https://github.com/jarvisar/senior-design" target="_blank" title="Source Code"><i class="bx bxl-github"></i></a>
                   <a href="./senior-design" target="_blank" title="Access Latest Deployment"><i class="bx bx-arrow-to-right"></i></a>
                 </div>
@@ -378,12 +371,12 @@
 
           <div class="col-lg-4 col-md-6 portfolio-item">
             <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-16.png" class="img-fluid" alt="" style="background-color: white;">
+              <img src="assets/img/portfolio/mini-cities-cover.jpg" class="img-fluid" alt="3D printable miniature city models" width="1200" height="1200" decoding="async">
               <div class="portfolio-info">
                 <h4>3D Printed Miniature Cities</h4>
                 <p>3D Design / Mapping</p>
                 <div class="portfolio-links">
-                  <a href="mini-cities-details.html" class="portfolio-details-lightbox" data-glightbox="type: external" title="Additional Details"><i class="bx bx-plus"></i>
+                  <a href="mini-cities-details.html" class="portfolio-details-lightbox stretched-link" data-glightbox="type: external" title="Additional Details" aria-label="View 3D Printed Miniature Cities details"><i class="bx bx-plus"></i></a>
                   <a href="https://makerworld.com/en/@jarvizar" target="_blank" title="MakerWorld Profile"><i class="bx bx-link"></i></a>
                   <a href="https://www.printables.com/@jarvizar" target="_blank" title="Printables Profile"><i class="bx bx-link"></i></a>
                 </div>
@@ -393,12 +386,12 @@
 
           <div class="col-lg-4 col-md-6 portfolio-item">
             <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-10.png" class="img-fluid" alt="">
+              <img src="assets/img/portfolio/interpreter-cover.jpg" class="img-fluid" alt="JarLang interpreter with x86-64 assembly and Python" width="1200" height="675" decoding="async">
               <div class="portfolio-info">
                 <h4>Interpreter & Custom Programming Language</h4>
                 <p>Language / Interpreter Project</p>
                 <div class="portfolio-links">
-                  <a href="interpreter-details.html" class="portfolio-details-lightbox" data-glightbox="type: external" title="Additional Details"><i class="bx bx-plus"></i>
+                  <a href="interpreter-details.html" class="portfolio-details-lightbox stretched-link" data-glightbox="type: external" title="Additional Details" aria-label="View Interpreter &amp; Custom Programming Language details"><i class="bx bx-plus"></i></a>
                   <a href="https://github.com/jarvisar/interpreter" target="_blank" title="Source Code"><i class="bx bxl-github"></i></a>
                 </div>
               </div>
@@ -407,12 +400,12 @@
 
           <div class="col-lg-4 col-md-6 portfolio-item">
             <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-11.png" class="img-fluid" alt="">
+              <img src="assets/img/portfolio/solar-system-cover.jpg" class="img-fluid" alt="Three.js Solar System with planets and the Three.js logo" width="1200" height="675" decoding="async">
               <div class="portfolio-info">
                 <h4>Three.js Solar System</h4>
                 <p>Interactive 3D Web Project</p>
                 <div class="portfolio-links">
-                  <a href="solar-system.html" class="portfolio-details-lightbox" data-glightbox="type: external" title="Additional Details"><i class="bx bx-plus"></i>
+                  <a href="solar-system.html" class="portfolio-details-lightbox stretched-link" data-glightbox="type: external" title="Additional Details" aria-label="View Three.js Solar System details"><i class="bx bx-plus"></i></a>
                   <a href="https://github.com/jarvisar/solar-system" target="_blank" title="Source Code"><i class="bx bxl-github"></i></a>
                   <a href="./solar-system" target="_blank" title="Access Latest Deployment"><i class="bx bx-arrow-to-right"></i></a>
                 </div>
@@ -427,7 +420,7 @@
                 <h4>Coastline</h4>
                 <p>Three.js Driving Game</p>
                 <div class="portfolio-links">
-                  <a href="coastline-details.html" class="portfolio-details-lightbox" data-glightbox="type: external" title="Additional Details" aria-label="Coastline details"><i class="bx bx-plus"></i></a>
+                  <a href="coastline-details.html" class="portfolio-details-lightbox stretched-link" data-glightbox="type: external" title="Additional Details" aria-label="Coastline details"><i class="bx bx-plus"></i></a>
                   <a href="https://github.com/jarvisar/coastline" target="_blank" rel="noopener noreferrer" title="Source Code" aria-label="Coastline source code"><i class="bx bxl-github"></i></a>
                   <a href="https://ajarvis.co/coastline" target="_blank" rel="noopener noreferrer" title="Access Latest Deployment" aria-label="Play Coastline"><i class="bx bx-arrow-to-right"></i></a>
                 </div>
@@ -437,12 +430,12 @@
 
           <div class="col-lg-4 col-md-6 portfolio-item">
             <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-12.png" class="img-fluid" alt="" style="background-color: white;">
+              <img src="assets/img/portfolio/sorting-visualizer-cover.jpg" class="img-fluid" alt="Sorting Algorithm Visualizer with descending bars" width="1200" height="675" decoding="async">
               <div class="portfolio-info">
                 <h4>Sorting Algorithm Visualizer</h4>
                 <p>Algorithm Visualization</p>
                 <div class="portfolio-links">
-                  <a href="sorter.html" class="portfolio-details-lightbox" data-glightbox="type: external" title="Additional Details"><i class="bx bx-plus"></i>
+                  <a href="sorter.html" class="portfolio-details-lightbox stretched-link" data-glightbox="type: external" title="Additional Details" aria-label="View Sorting Algorithm Visualizer details"><i class="bx bx-plus"></i></a>
                   <a href="https://github.com/jarvisar/sorting-algos" target="_blank" title="Source Code"><i class="bx bxl-github"></i></a>
                   <a href="./sorting-algos" target="_blank" title="Access Latest Deployment"><i class="bx bx-arrow-to-right"></i></a>
                 </div>
@@ -452,12 +445,26 @@
 
           <div class="col-lg-4 col-md-6 portfolio-item">
             <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-13.png" class="img-fluid" alt="" style="background-color: white;">
+              <img src="assets/img/portfolio/3dmapcreator-cover.jpg" class="img-fluid" alt="3D Map Creator cover featuring a Cincinnati city model" width="1200" height="675">
+              <div class="portfolio-info">
+                <h4>3D Map Creator</h4>
+                <p>Blender / 3D Printing</p>
+                <div class="portfolio-links">
+                  <a href="3dmapcreator-details.html" class="portfolio-details-lightbox stretched-link" data-glightbox="type: external" title="Additional Details" aria-label="3D Map Creator details"><i class="bx bx-plus"></i></a>
+                  <a href="https://github.com/jarvisar/3dmapcreator" target="_blank" rel="noopener noreferrer" title="Source Code" aria-label="3D Map Creator source code"><i class="bx bxl-github"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 portfolio-item">
+            <div class="portfolio-wrap">
+              <img src="assets/img/portfolio/network-security-cover.jpg" class="img-fluid" alt="CS 5153 Network Security Projects with a shield and padlock" width="1200" height="675" decoding="async">
               <div class="portfolio-info">
                 <h4>Projects for CS 5153</h4>
                 <p>Network Security Projects</p>
                 <div class="portfolio-links">
-                  <a href="cs5153-details.html" class="portfolio-details-lightbox" data-glightbox="type: external" title="Additional Details"><i class="bx bx-plus"></i>
+                  <a href="cs5153-details.html" class="portfolio-details-lightbox stretched-link" data-glightbox="type: external" title="Additional Details" aria-label="View Projects for CS 5153 details"><i class="bx bx-plus"></i></a>
                     <a href="https://github.com/jarvisar/NetworkSecurity" target="_blank" title="GitHub Repo"><i class="bx bx-link"></i></a>
                 </div>
               </div>
@@ -466,12 +473,12 @@
 
           <div class="col-lg-4 col-md-6 portfolio-item">
             <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-14.png" class="img-fluid" alt="" style="background-color: white;">
+              <img src="assets/img/portfolio/partyline-cover.jpg" class="img-fluid" alt="PartyLine DJ App" width="1200" height="675" decoding="async">
               <div class="portfolio-info">
                 <h4>PartyLine: DJ App</h4>
                 <p>Full-Stack Web Application</p>
                 <div class="portfolio-links">
-                  <a href="dj-app.html" class="portfolio-details-lightbox" data-glightbox="type: external" title="Additional Details"><i class="bx bx-plus"></i>
+                  <a href="dj-app.html" class="portfolio-details-lightbox stretched-link" data-glightbox="type: external" title="Additional Details" aria-label="View PartyLine: DJ App details"><i class="bx bx-plus"></i></a>
                   <a href="https://github.com/jarvisar/dj-app" target="_blank" title="Source Code"><i class="bx bx-link"></i></a>
                 </div>
               </div>
@@ -480,12 +487,12 @@
 
           <div class="col-lg-4 col-md-6 portfolio-item">
             <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-15.png" class="img-fluid" alt="" style="background-color: white;">
+              <img src="assets/img/portfolio/backrooms-cover.jpg" class="img-fluid" alt="Backrooms Simulator showing the in-game corridors" width="1200" height="675" decoding="async">
               <div class="portfolio-info">
                 <h4>Backrooms Simulator</h4>
                 <p>Interactive Three.js Project</p>
                 <div class="portfolio-links">
-                  <a href="backrooms-details.html" class="portfolio-details-lightbox" data-glightbox="type: external" title="Additional Details"><i class="bx bx-plus"></i>
+                  <a href="backrooms-details.html" class="portfolio-details-lightbox stretched-link" data-glightbox="type: external" title="Additional Details" aria-label="View Backrooms Simulator details"><i class="bx bx-plus"></i></a>
                   <a href="https://github.com/jarvisar/threejs-maze" target="_blank" title="Source Code"><i class="bx bx-link"></i></a>
                   <a href="./threejs-maze" target="_blank" title="Access Latest Deployment"><i class="bx bx-arrow-to-right"></i></a>
                 </div>
@@ -500,7 +507,7 @@
                 <h4>Citydriver</h4>
                 <p>Three.js Taxi Game</p>
                 <div class="portfolio-links">
-                  <a href="citydriver-details.html" class="portfolio-details-lightbox" data-glightbox="type: external" title="Additional Details" aria-label="Citydriver details"><i class="bx bx-plus"></i></a>
+                  <a href="citydriver-details.html" class="portfolio-details-lightbox stretched-link" data-glightbox="type: external" title="Additional Details" aria-label="Citydriver details"><i class="bx bx-plus"></i></a>
                   <a href="https://github.com/jarvisar/citydriver" target="_blank" rel="noopener noreferrer" title="Source Code" aria-label="Citydriver source code"><i class="bx bxl-github"></i></a>
                   <a href="https://ajarvis.co/citydriver" target="_blank" rel="noopener noreferrer" title="Access Latest Deployment" aria-label="Play Citydriver"><i class="bx bx-arrow-to-right"></i></a>
                 </div>
@@ -510,12 +517,26 @@
 
           <div class="col-lg-4 col-md-6 portfolio-item">
             <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-9.jpg" class="img-fluid" alt="">
+              <img src="assets/img/portfolio/lasersvg-cover.jpg" class="img-fluid" alt="laserSVG cover featuring a Cincinnati map in a print layout" width="1200" height="675">
+              <div class="portfolio-info">
+                <h4>laserSVG</h4>
+                <p>Blender / Laser Engraving</p>
+                <div class="portfolio-links">
+                  <a href="lasersvg-details.html" class="portfolio-details-lightbox stretched-link" data-glightbox="type: external" title="Additional Details" aria-label="laserSVG details"><i class="bx bx-plus"></i></a>
+                  <a href="https://github.com/jarvisar/laserSVG" target="_blank" rel="noopener noreferrer" title="Source Code" aria-label="laserSVG source code"><i class="bx bxl-github"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 portfolio-item">
+            <div class="portfolio-wrap">
+              <img src="assets/img/portfolio/data-visualization-cover.jpg" class="img-fluid" alt="CS 5124 Visual Interfaces for Data with the D3 logo" width="1200" height="675" decoding="async">
               <div class="portfolio-info">
                 <h4>Projects for CS 5124</h4>
                 <p>Data Visualization Projects</p>
                 <div class="portfolio-links">
-                  <a href="cs5124-details.html" class="portfolio-details-lightbox" data-glightbox="type: external" title="Additional Details"><i class="bx bx-plus"></i>
+                  <a href="cs5124-details.html" class="portfolio-details-lightbox stretched-link" data-glightbox="type: external" title="Additional Details" aria-label="View Projects for CS 5124 details"><i class="bx bx-plus"></i></a>
                   <a href="https://sites.google.com/view/adam-jarvis/" target="_blank" title="View D3 Portfolio"><i class="bx bx-link"></i></a>
                 </div>
               </div>
@@ -524,12 +545,12 @@
 
           <div class="col-lg-4 col-md-6 portfolio-item">
             <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-6.jpg" class="img-fluid" alt="">
+              <img src="assets/img/portfolio/cors-proxy-cover.jpg" class="img-fluid" alt="CORS Proxy and Access-Control-Allow-Origin" width="1200" height="675" decoding="async">
               <div class="portfolio-info">
                 <h4>CORS Proxy</h4>
                 <p>Web / API Utility</p>
                 <div class="portfolio-links">
-                  <a href="cors-proxy-details.html" class="portfolio-details-lightbox" data-glightbox="type: external" title="Additional Details"><i class="bx bx-plus"></i>
+                  <a href="cors-proxy-details.html" class="portfolio-details-lightbox stretched-link" data-glightbox="type: external" title="Additional Details" aria-label="View CORS Proxy details"><i class="bx bx-plus"></i></a>
                   <a href="https://github.com/jarvisar/cors-proxy" target="_blank" title="Source Code"><i class="bx bxl-github"></i></a>
                   <a href="https://cors-proxy-jarvisar.vercel.app/" target="_blank" title="Access Latest Deployment"><i class="bx bx-arrow-to-right"></i></a>
                 </div>
@@ -539,14 +560,10 @@
 
         </div>
       </div>
-    </div>
     </section><!-- End Projects/Portfolio Section -->
 
-    <br>
-    <br>
-
     <!-- ======= Volunteer & Involvement Section ======= -->
-    <section id="involvement" class="portfolio section-bg">
+    <section id="involvement" class="portfolio">
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
@@ -565,7 +582,7 @@
                 <h4>Mission Addiction Family Service</h4>
                 <p>Volunteering</p>
                 <div class="portfolio-links">
-                  <a href="mission-addiction-details.html" class="portfolio-details-lightbox" data-glightbox="type: external" title="Additional Details"><i class="bx bx-plus"></i>
+                  <a href="mission-addiction-details.html" class="portfolio-details-lightbox stretched-link" data-glightbox="type: external" title="Additional Details" aria-label="View Mission Addiction Family Service details"><i class="bx bx-plus"></i></a>
                   <a href="https://www.mission-addiction.org/" target="_blank"><i class="bx bx-link"></i></a>
                 </div>
               </div>
@@ -579,7 +596,7 @@
                 <h4>Theta Chi Fraternity</h4>
                 <p>College Involvement</p>
                 <div class="portfolio-links">
-                  <a href="theta-chi-details.html" class="portfolio-details-lightbox" data-glightbox="type: external" title="Additional Details"><i class="bx bx-plus"></i>
+                  <a href="theta-chi-details.html" class="portfolio-details-lightbox stretched-link" data-glightbox="type: external" title="Additional Details" aria-label="View Theta Chi Fraternity details"><i class="bx bx-plus"></i></a>
                   <a href="https://ucthetachi.com/" target="_blank"><i class="bx bx-link"></i></a>
                 </div>
               </div>
@@ -593,7 +610,7 @@
                 <h4>Sophie's Angel Run</h4>
                 <p>Volunteering</p>
                 <div class="portfolio-links">
-                  <a href="sophies-angel-run-details.html" class="portfolio-details-lightbox" data-glightbox="type: external" title="Additional Details"><i class="bx bx-plus"></i>
+                  <a href="sophies-angel-run-details.html" class="portfolio-details-lightbox stretched-link" data-glightbox="type: external" title="Additional Details" aria-label="View Sophie&#x27;s Angel Run details"><i class="bx bx-plus"></i></a>
                     <a href="https://sophiesangelrun.org/" target="_blank"><i class="bx bx-link"></i></a>
                 </div>
               </div>
@@ -607,7 +624,7 @@
                 <h4>ACM@UC</h4>
                 <p>Student Organization</p>
                 <div class="portfolio-links">
-                  <a href="acm-details.html" class="portfolio-details-lightbox" data-glightbox="type: external" title="Additional Details"><i class="bx bx-plus"></i>
+                  <a href="acm-details.html" class="portfolio-details-lightbox stretched-link" data-glightbox="type: external" title="Additional Details" aria-label="View ACM@UC details"><i class="bx bx-plus"></i></a>
                   <a href="https://acmatuc.org/" target="_blank"><i class="bx bx-link"></i></a>
                 </div>
               </div>
@@ -621,7 +638,7 @@
                 <h4>Mission 22</h4>
                 <p>Involvement</p>
                 <div class="portfolio-links">
-                  <a href="assets/img/portfolio/portfolio-7.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Mission 22"><i class="bx bx-plus"></i></a>
+                  <a href="assets/img/portfolio/portfolio-7.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox stretched-link" title="Mission 22" aria-label="View Mission 22 details"><i class="bx bx-plus"></i></a>
                   <a href="https://mission22.com/" target="_blank"><i class="bx bx-link"></i></a>
                 </div>
               </div>
@@ -635,7 +652,7 @@
                 <h4>UC Esports Club</h4>
                 <p>Student Organization</p>
                 <div class="portfolio-links">
-                  <a href="assets/img/portfolio/portfolio-17.webp" data-gallery="portfolioGallery" class="portfolio-lightbox" title="UC Esports Club"><i class="bx bx-plus"></i></a>
+                  <a href="assets/img/portfolio/portfolio-17.webp" data-gallery="portfolioGallery" class="portfolio-lightbox stretched-link" title="UC Esports Club" aria-label="View UC Esports Club details"><i class="bx bx-plus"></i></a>
                   <a href="https://www.uc.edu/campaigns/esports.html" target="_blank"><i class="bx bx-link"></i></a>
                 </div>
               </div>
@@ -649,7 +666,7 @@
                 <h4>Matthew 25: Ministries</h4>
                 <p>Volunteering</p>
                 <div class="portfolio-links">
-                  <a href="m25-details.html" class="portfolio-details-lightbox" data-glightbox="type: external" title="Additional Details"><i class="bx bx-plus"></i>
+                  <a href="m25-details.html" class="portfolio-details-lightbox stretched-link" data-glightbox="type: external" title="Additional Details" aria-label="View Matthew 25: Ministries details"><i class="bx bx-plus"></i></a>
                   <a href="https://m25m.org/" target="_blank"><i class="bx bx-link"></i></a>
                 </div>
               </div>
@@ -658,7 +675,6 @@
 
         </div>
       </div>
-    </div>
     </section><!-- End Volunteer/Involvement Section -->
 
 
@@ -701,12 +717,12 @@
           <div class="col-lg-8 mt-5 mt-lg-0">
 
             <form action="https://formspree.io/f/mbjegwlv" id="email-form" method="POST" role="form" class="php-email-form">
-              <div class="form-row" style="display: flex;">
-                <div class="col-md-6 form-group" style="margin-right: 5px; width: calc( 50% - 10px);">
+              <div class="row gx-3">
+                <div class="col-md-6 form-group">
                   <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
                   <div class="validate"></div>
                 </div>
-                <div class="col-md-6 form-group" style="margin-left: 5px;">
+                <div class="col-md-6 form-group">
                   <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
                   <div class="validate"></div>
                 </div>
@@ -730,8 +746,6 @@
         </div>
 
       </div>
-      <br>
-      <br>
     </section><!-- End Contact Section -->
 
   </main><!-- End #main -->
