@@ -51,6 +51,7 @@
   });
 
   document.addEventListener("scroll", function() {
+    if (!document.getElementById("scroll-prompt")) return;
     if (window.scrollY === 0) {
       document.getElementById("scroll-prompt").style.opacity = 1;
       document.getElementById("scroll-prompt").style.pointerEvents = "auto";
