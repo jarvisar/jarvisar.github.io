@@ -863,7 +863,7 @@ section {
   color: var(--color-forest-dark);
 }
 
-/* The details link covers the image; other links stay above it. */
+/* The primary card link covers the image; other links stay above it. */
 .portfolio .portfolio-wrap .portfolio-links a:not(.stretched-link) {
   position: relative;
   z-index: 2;
