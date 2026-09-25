@@ -3,6 +3,7 @@
 <head>
   <title>Basic Tetris HTML Game</title>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
   html, body {
     height: 100%;
@@ -18,6 +19,9 @@
 
   canvas {
     border: 1px solid black;
+    box-sizing: border-box;
+    width: min(320px, calc(100vw - 24px), calc((100vh - 24px) / 2));
+    height: auto;
   }
   </style>
 </head>

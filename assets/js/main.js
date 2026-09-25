@@ -36,6 +36,31 @@
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
+  let tetrisTrigger = null;
+  const tetrisLightbox = GLightbox({
+    elements: [{ href: 'tetris.html', type: 'external' }],
+    width: '420px',
+    height: '90vh',
+    touchNavigation: false,
+    openEffect: reducedMotion ? 'none' : 'zoom',
+    closeEffect: reducedMotion ? 'none' : 'zoom',
+    onClose: () => tetrisTrigger?.focus({ preventScroll: true })
+  });
+
+  tetrisLightbox.on('slide_after_load', ({ slide }) => {
+    const frame = slide.querySelector('iframe');
+    frame.title = 'Tetris — use the arrow keys to play and Escape to close';
+    frame.contentWindow.focus();
+    // Keyboard events inside an iframe do not reach the popup viewer.
+    frame.contentDocument.addEventListener('keydown', (event) => {
+      if (event.key.startsWith('Arrow')) event.preventDefault();
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        tetrisLightbox.close();
+      }
+    });
+  });
+
   const konamiCode = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "KeyB", "KeyA"];
   let konamiIndex = 0;
 
@@ -43,7 +68,11 @@
     if (event.code === konamiCode[konamiIndex]) {
       konamiIndex++;
       if (konamiIndex === konamiCode.length) {
-        window.location.href = "tetris.html";
+        konamiIndex = 0;
+        if (!document.querySelector('.glightbox-container')) {
+          tetrisTrigger = document.activeElement;
+          tetrisLightbox.open();
+        }
       }
     } else {
       konamiIndex = 0;
