@@ -1,32 +1,65 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Basic Tetris HTML Game</title>
+  <title>Tetris</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-  html, body {
-    height: 100%;
-    margin: 0;
-  }
-
+  * { box-sizing: border-box; }
+  html, body { min-height: 100%; margin: 0; }
   body {
-    background: white;
+    background: #111827;
+    color: #e5edf8;
+    font: 14px/1.4 system-ui, sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
+    min-height: 100vh;
+    padding: 16px;
   }
-
+  main { width: 320px; max-width: 100%; text-align: center; }
+  header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+  h1 { margin: 0; font-size: 20px; letter-spacing: .08em; }
+  button {
+    border: 1px solid #40516b;
+    border-radius: 6px;
+    padding: 6px 12px;
+    background: #1e293b;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+  }
+  button:hover { background: #334155; }
+  button:focus-visible { outline: 2px solid #7dd3fc; outline-offset: 3px; }
+  dl { display: flex; gap: 8px; margin: 0 0 12px; }
+  dl div { flex: 1; padding: 7px; border-radius: 6px; background: #1e293b; }
+  dt { color: #a8b8ce; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
+  dd { margin: 2px 0 0; font-size: 20px; font-weight: 600; font-variant-numeric: tabular-nums; }
   canvas {
-    border: 1px solid black;
-    box-sizing: border-box;
-    width: min(320px, calc(100vw - 24px), calc((100vh - 24px) / 2));
+    display: block;
+    margin: auto;
+    border: 1px solid #40516b;
+    border-radius: 4px;
+    background: #080f1d;
+    width: min(100%, max(80px, calc((100vh - 190px) / 2)));
     height: auto;
   }
+  p { margin: 10px 0 0; color: #a8b8ce; font-size: 11px; }
+  #status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
   </style>
 </head>
 <body>
-<canvas width="320" height="640" id="game"></canvas>
+<main aria-label="Tetris game">
+  <header><h1>TETRIS</h1><button id="restart" type="button">Restart</button></header>
+  <dl aria-label="Game statistics">
+    <div><dt>Score</dt><dd id="score">0</dd></div>
+    <div><dt>Lines</dt><dd id="lines">0</dd></div>
+    <div><dt>Level</dt><dd id="level">1</dd></div>
+  </dl>
+  <canvas width="320" height="640" id="game" aria-label="Tetris board. Use left and right arrows to move, up to rotate, and down to drop.">Tetris requires a browser with canvas support.</canvas>
+  <p>← → Move · ↑ Rotate · ↓ Drop</p>
+  <span id="status" role="status"></span>
+</main>
 <script>
 // https://tetris.fandom.com/wiki/Tetris_Guideline
 
@@ -93,6 +126,7 @@ function isValidMove(matrix, cellRow, cellCol) {
           // outside the game bounds
           cellCol + col < 0 ||
           cellCol + col >= playfield[0].length ||
+          cellRow + row < -2 ||
           cellRow + row >= playfield.length ||
           // collides with another piece
           playfield[cellRow + row][cellCol + col])
@@ -121,9 +155,11 @@ function placeTetromino() {
     }
   }
 
+  let cleared = 0;
   // check for line clears starting from the bottom and working our way up
   for (let row = playfield.length - 1; row >= 0; ) {
     if (playfield[row].every(cell => !!cell)) {
+      cleared++;
 
       // drop every row above this one
       for (let r = row; r >= 0; r--) {
@@ -137,13 +173,20 @@ function placeTetromino() {
     }
   }
 
+  score += [0, 100, 300, 500, 800][cleared] * level;
+  lines += cleared;
+  level = 1 + Math.floor(lines / 10);
+  updateStats();
+  dropElapsed = 0;
   tetromino = getNextTetromino();
+  if (!isValidMove(tetromino.matrix, tetromino.row, tetromino.col)) showGameOver();
 }
 
 // show the game over screen
 function showGameOver() {
   cancelAnimationFrame(rAF);
   gameOver = true;
+  document.getElementById('status').textContent = `Game over. Score: ${score}. Select Restart to play again.`;
 
   context.fillStyle = 'black';
   context.globalAlpha = 0.75;
@@ -217,22 +260,50 @@ const tetrominos = {
 
 // color of each tetromino
 const colors = {
-  'I': 'cyan',
-  'O': 'yellow',
-  'T': 'purple',
-  'S': 'green',
-  'Z': 'red',
-  'J': 'blue',
-  'L': 'orange'
+  'I': '#67e8f9',
+  'O': '#fde047',
+  'T': '#c084fc',
+  'S': '#86efac',
+  'Z': '#fb7185',
+  'J': '#60a5fa',
+  'L': '#fdba74'
 };
 
-let count = 0;
+let score = 0;
+let lines = 0;
+let level = 1;
+let dropElapsed = 0;
+let lastTime = null;
 let tetromino = getNextTetromino();
 let rAF = null;  // keep track of the animation frame so we can cancel it
 let gameOver = false;
 
+function updateStats() {
+  document.getElementById('score').textContent = score;
+  document.getElementById('lines').textContent = lines;
+  document.getElementById('level').textContent = level;
+}
+
+document.getElementById('restart').addEventListener('click', () => {
+  cancelAnimationFrame(rAF);
+  for (let row = -2; row < 20; row++) playfield[row].fill(0);
+  tetrominoSequence.length = 0;
+  score = lines = dropElapsed = 0;
+  level = 1;
+  lastTime = null;
+  gameOver = false;
+  tetromino = getNextTetromino();
+  updateStats();
+  document.getElementById('status').textContent = 'New game started.';
+  rAF = requestAnimationFrame(loop);
+});
+
 // game loop
-function loop() {
+function loop(timestamp) {
+  // Elapsed time keeps gravity consistent across display refresh rates.
+  // Cap long gaps so returning from a background tab does not fast-forward.
+  dropElapsed += lastTime === null ? 0 : Math.min(timestamp - lastTime, 100);
+  lastTime = timestamp;
   rAF = requestAnimationFrame(loop);
   context.clearRect(0,0,canvas.width,canvas.height);
 
@@ -252,15 +323,15 @@ function loop() {
   // draw the active tetromino
   if (tetromino) {
 
-    // tetromino falls every 60 frames
-    if (++count > 60) {
+    if (dropElapsed >= Math.max(120, 1000 - (level - 1) * 80)) {
       tetromino.row++;
-      count = 0;
+      dropElapsed = 0;
 
       // place piece if it runs into anything
       if (!isValidMove(tetromino.matrix, tetromino.row, tetromino.col)) {
         tetromino.row--;
         placeTetromino();
+        if (gameOver) return;
       }
     }
 
@@ -280,11 +351,12 @@ function loop() {
 
 // listen to keyboard events to move the active tetromino
 document.addEventListener('keydown', function(e) {
+  if (e.key.startsWith('Arrow')) e.preventDefault();
   if (gameOver) return;
 
   // left and right arrow keys (move)
-  if (e.which === 37 || e.which === 39) {
-    const col = e.which === 37
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+    const col = e.key === 'ArrowLeft'
       ? tetromino.col - 1
       : tetromino.col + 1;
 
@@ -294,7 +366,7 @@ document.addEventListener('keydown', function(e) {
   }
 
   // up arrow key (rotate)
-  if (e.which === 38) {
+  if (e.key === 'ArrowUp') {
     const matrix = rotate(tetromino.matrix);
     if (isValidMove(matrix, tetromino.row, tetromino.col)) {
       tetromino.matrix = matrix;
@@ -302,7 +374,7 @@ document.addEventListener('keydown', function(e) {
   }
 
   // down arrow key (drop)
-  if(e.which === 40) {
+  if(e.key === 'ArrowDown') {
     const row = tetromino.row + 1;
 
     if (!isValidMove(tetromino.matrix, row, tetromino.col)) {
