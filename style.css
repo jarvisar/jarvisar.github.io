@@ -135,7 +135,7 @@ header {
 
 main {
   max-width: 760px;
-  margin: 24px auto 0;
+  margin: 24px auto 32px;
   overflow: hidden;
   border: 1px solid var(--border-strong);
   border-radius: 4px;
@@ -240,13 +240,6 @@ li + li {
   flex: none;
   color: var(--text-3);
   font-size: 12px;
-}
-
-footer {
-  margin: 14px 0 32px;
-  color: var(--text-3);
-  font-size: 12px;
-  text-align: center;
 }
 
 @media (max-width: 800px) {
