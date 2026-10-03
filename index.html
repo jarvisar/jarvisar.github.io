@@ -52,10 +52,16 @@
       }
     </script>
     <link rel="stylesheet" href="/style.css" />
+    <script src="/gravity.js" defer></script>
   </head>
   <body>
     <header>
-      <a class="brand" href="/"><img src="/favicon.svg" width="20" height="20" alt="" />jarvisar</a>
+      <div class="brand">
+        <button class="brand-mark" type="button" aria-label="Site icon: press six times for a surprise">
+          <img src="/favicon.svg" width="20" height="20" alt="" />
+        </button>
+        <a class="brand-name" href="/">jarvisar</a>
+      </div>
       <nav class="header-links" aria-label="Profiles and support">
         <a class="header-btn header-icon" href="https://www.buymeacoffee.com/jarvizar" aria-label="Buy me a coffee" title="Buy me a coffee">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -88,7 +94,7 @@
             <img src="/icons/citymodel.png" width="40" height="40" alt="" />
             <span class="text">
               <span class="name">City Model</span>
-              <span class="desc">Turns any area of the map into a multicolour 3D printable city model.</span>
+              <span class="desc">Generate a 3D printable city model from any area of the map.</span>
             </span>
             <span class="host">citymodel.jarvisar.com</span>
           </a>
@@ -108,7 +114,7 @@
             <img src="/icons/geometric.png" width="40" height="40" alt="" />
             <span class="text">
               <span class="name">Plotter Geometry</span>
-              <span class="desc">Generative line art for pen plotters. 31 designs, exported as layered SVG files.</span>
+              <span class="desc">Generative line art for pen plotters. 31 designs, exported as layered Vector files.</span>
             </span>
             <span class="host">geometric.jarvisar.com</span>
           </a>
@@ -228,5 +234,8 @@
       </ul>
 
     </main>
+    <footer class="site-note">
+      <p>Try the Konami Code on each page!</p>
+    </footer>
   </body>
 </html>
