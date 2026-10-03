@@ -1,0 +1,271 @@
+/* Same colours and look as SVGmap and City Model */
+:root {
+  color-scheme: light;
+  --font: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --bg: #e4e4e4;
+  --surface: #ffffff;
+  --surface-hover: #f3f6fa;
+  --border: #e2e2e2;
+  --border-strong: #b5b5b5;
+  --text: #333333;
+  --text-2: #555555;
+  --text-3: #777777;
+  --emboss: 0 1px 0 rgb(255 255 255 / 0.85);
+  --link: #2470c6;
+  --link-hover: #1a548f;
+  --accent: #2b7bd6;
+  --bar-1: #fcfcfc;
+  --bar-2: #e9e9e9;
+  --bar-border: #cdcdcd;
+  --bar-highlight: rgb(255 255 255 / 0.75);
+  --header-1: #45484e;
+  --header-2: #2a2c30;
+  --icon-shadow: 0 1px 2px rgb(0 0 0 / 0.3);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --bg: #19191b;
+    --surface: #2b2c2f;
+    --surface-hover: #35383d;
+    --border: #232426;
+    --border-strong: #111213;
+    --text: #e3e3e3;
+    --text-2: #bcbcbc;
+    --text-3: #979797;
+    --emboss: 0 -1px 0 rgb(0 0 0 / 0.6);
+    --link: #74aee9;
+    --link-hover: #a0c8f2;
+    --accent: #4a8ed8;
+    --bar-1: #3c3d41;
+    --bar-2: #323337;
+    --bar-border: #1c1d1f;
+    --bar-highlight: rgb(255 255 255 / 0.06);
+    --header-1: #2f3034;
+    --header-2: #1d1e21;
+    --icon-shadow: 0 1px 3px rgb(0 0 0 / 0.7);
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font: 14px/1.5 var(--font);
+  color: var(--text);
+  background: var(--bg);
+}
+
+a {
+  color: var(--link);
+}
+
+a:hover {
+  color: var(--link-hover);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 44px;
+  padding: 0 8px 0 12px;
+  border-bottom: 1px solid #000;
+  background: linear-gradient(var(--header-1), var(--header-2));
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.1),
+    0 1px 3px rgb(0 0 0 / 0.25);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  text-shadow: 0 -1px 0 #000;
+}
+
+.brand:hover {
+  color: #fff;
+}
+
+.brand img {
+  border-radius: 4px;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.5);
+}
+
+.header-btn {
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  padding: 0 12px;
+  border: 1px solid #16171a;
+  border-radius: 4px;
+  background: linear-gradient(#55585e, #3b3d42);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.12);
+  color: #e6e6e6;
+  font-size: 12px;
+  font-weight: bold;
+  text-decoration: none;
+  text-shadow: 0 -1px 0 #000;
+  white-space: nowrap;
+}
+
+.header-btn:hover {
+  background: linear-gradient(#61646b, #45474d);
+  color: #fff;
+}
+
+.header-btn:active {
+  background: #222326;
+  box-shadow: inset 0 2px 5px rgb(0 0 0 / 0.6);
+}
+
+main {
+  max-width: 760px;
+  margin: 24px auto 0;
+  overflow: hidden;
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  background: var(--surface);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.15);
+}
+
+.intro {
+  padding: 4px 20px 16px;
+}
+
+h1 {
+  font-size: 24px;
+  line-height: 1.25;
+  margin: 16px 0 6px;
+  text-shadow: var(--emboss);
+}
+
+.intro p {
+  margin: 0;
+  color: var(--text-2);
+}
+
+/* Same as the collapsible section bars in the SVGmap sidebar, minus the arrow */
+h2 {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 0;
+  padding: 6px 20px;
+  border-top: 1px solid var(--bar-border);
+  border-bottom: 1px solid var(--bar-border);
+  background: linear-gradient(var(--bar-1), var(--bar-2));
+  box-shadow: inset 0 1px 0 var(--bar-highlight);
+  font-size: 13px;
+  text-shadow: var(--emboss);
+}
+
+h2 span {
+  color: var(--text-3);
+  font-size: 11px;
+  font-weight: normal;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+li + li {
+  border-top: 1px solid var(--border);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 20px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.row:hover {
+  color: inherit;
+  background: var(--surface-hover);
+}
+
+.row:focus-visible {
+  outline-offset: -2px;
+}
+
+.row img {
+  flex: none;
+  border-radius: 9px;
+  box-shadow: var(--icon-shadow);
+}
+
+.text {
+  flex: 1;
+  min-width: 0;
+}
+
+.name {
+  display: block;
+  font-size: 15px;
+  font-weight: bold;
+  text-shadow: var(--emboss);
+}
+
+.row:hover .name {
+  color: var(--link);
+}
+
+.desc {
+  display: block;
+  color: var(--text-2);
+  font-size: 13px;
+}
+
+.host {
+  flex: none;
+  color: var(--text-3);
+  font-size: 12px;
+}
+
+footer {
+  margin: 14px 0 32px;
+  color: var(--text-3);
+  font-size: 12px;
+  text-align: center;
+}
+
+@media (max-width: 800px) {
+  main {
+    margin: 0;
+    border-width: 0 0 1px;
+    border-radius: 0;
+  }
+
+  .intro,
+  h2,
+  .row {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .host {
+    display: none;
+  }
+}
