@@ -76,6 +76,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
   height: 44px;
   padding: 0 8px 0 12px;
   border-bottom: 1px solid #000;
@@ -87,6 +88,7 @@ header {
 
 .brand {
   display: flex;
+  flex: none;
   align-items: center;
   gap: 8px;
   color: #fff;
@@ -106,6 +108,13 @@ header {
   box-shadow: 0 1px 2px rgb(0 0 0 / 0.5);
 }
 
+.header-links {
+  display: flex;
+  align-items: center;
+  flex: none;
+  gap: 4px;
+}
+
 .header-btn {
   display: inline-flex;
   align-items: center;
@@ -121,6 +130,30 @@ header {
   text-decoration: none;
   text-shadow: 0 -1px 0 #000;
   white-space: nowrap;
+}
+
+.header-icon {
+  justify-content: center;
+  flex: none;
+  width: 30px;
+  padding: 0;
+}
+
+.header-github {
+  justify-content: center;
+  flex: none;
+  gap: 6px;
+}
+
+@media (max-width: 300px) {
+  .header-github {
+    width: 30px;
+    padding: 0;
+  }
+
+  .header-github-label {
+    display: none;
+  }
 }
 
 .header-btn:hover {
