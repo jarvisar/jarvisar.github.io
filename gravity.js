@@ -44,6 +44,20 @@
     return library;
   }
 
+  async function requestOrientationAccess() {
+    const orientationEvent = window.DeviceOrientationEvent;
+    if (!window.isSecureContext || !orientationEvent) return false;
+    try {
+      if (typeof orientationEvent.requestPermission === 'function') {
+        return await orientationEvent.requestPermission() === 'granted';
+      }
+      return true;
+    } catch {
+      // Sensor access is optional; keep normal gravity if permission is blocked.
+      return false;
+    }
+  }
+
   async function toggleGravity() {
     if (playground) {
       playground.restore();
@@ -53,8 +67,10 @@
     loading = true;
     announcement.classList.remove('gravity-error');
     try {
-      const matter = await loadPhysics();
-      playground = createPlayground(matter);
+      // Request permission during the unlocking gesture, before loading physics.
+      const orientationAccess = requestOrientationAccess();
+      const [matter, orientationAllowed] = await Promise.all([loadPhysics(), orientationAccess]);
+      playground = createPlayground(matter, orientationAllowed);
       playground.start();
       announce('Gravity unlocked. Drag and throw the pieces. Tap a link to open it. Press Escape or Restore to return to the site.');
     } catch (error) {
@@ -101,7 +117,7 @@
     }
   });
 
-  function createPlayground({ Bodies, Body, Composite, Constraint, Engine, Sleeping }) {
+  function createPlayground({ Bodies, Body, Composite, Constraint, Engine, Sleeping }, orientationAllowed) {
     const abort = new AbortController();
     const eventOptions = { signal: abort.signal };
     const scroll = { x: window.scrollX, y: window.scrollY };
@@ -131,12 +147,14 @@
       <p class="gravity-hint" id="gravity-hint">Drag &amp; fling · Tap links to visit · Esc to restore</p>`;
     const restoreButton = stage.querySelector('[data-action="restore"]');
     const floatButton = stage.querySelector('[data-action="float"]');
+    const hint = stage.querySelector('#gravity-hint');
     const pieces = [];
     const pieceByElement = new Map();
     let walls = [];
     let view;
     let grab;
     let zeroG = false;
+    let tilt;
     let sceneScale = 1;
     let roof = -10000;
     let frameId = 0;
@@ -308,9 +326,43 @@
       wake();
     }
 
+    function updateGravity(force = false) {
+      if (restored) return;
+      let x = 0;
+      let y = 1;
+      if (tilt) {
+        // Project physical gravity onto the screen, then account for rotation.
+        const deviceX = Math.cos(tilt.beta) * Math.sin(tilt.gamma);
+        const deviceY = Math.sin(tilt.beta);
+        const angle = (window.screen.orientation?.angle ?? window.orientation ?? 0) * Math.PI / 180;
+        x = deviceX * Math.cos(angle) + deviceY * Math.sin(angle);
+        y = deviceY * Math.cos(angle) - deviceX * Math.sin(angle);
+      }
+      if (zeroG) x = y = 0;
+      // Ignore sensor jitter so resting pieces can still sleep.
+      if (!force && Math.hypot(x - engine.gravity.x, y - engine.gravity.y) < 0.02) return;
+      engine.gravity.x = x;
+      engine.gravity.y = y;
+      pieces.forEach(({ body }) => Sleeping.set(body, false));
+      wake();
+    }
+
+    function orient(event) {
+      if (document.hidden || !Number.isFinite(event.beta) || !Number.isFinite(event.gamma)) return;
+      const firstReading = !tilt;
+      tilt = { beta: event.beta * Math.PI / 180, gamma: event.gamma * Math.PI / 180 };
+      if (firstReading) {
+        hint.textContent = 'Tilt your device · Drag & fling · Tap links to visit · Esc to restore';
+        // Close the ceiling and bring incoming pieces inside before gravity reverses.
+        resize();
+        if (!zeroG) announce('Device tilt enabled. Tilt your device to steer gravity.');
+      }
+      updateGravity(firstReading);
+    }
+
     function toggleFloat() {
       zeroG = !zeroG;
-      engine.gravity.y = zeroG ? 0 : 1;
+      updateGravity(true);
       // In zero G all pieces need to be inside the room, including incoming ones.
       roof = zeroG ? 0 : roof;
       buildWalls();
@@ -480,6 +532,14 @@
       }, eventOptions);
       window.addEventListener('resize', resize, eventOptions);
       window.visualViewport?.addEventListener('resize', resize, eventOptions);
+      if (orientationAllowed) {
+        window.addEventListener('deviceorientation', orient, eventOptions);
+        if (window.screen.orientation) {
+          window.screen.orientation.addEventListener('change', () => updateGravity(), eventOptions);
+        } else {
+          window.addEventListener('orientationchange', () => updateGravity(), eventOptions);
+        }
+      }
       document.addEventListener('visibilitychange', () => {
         if (document.hidden) {
           release(undefined, true);
