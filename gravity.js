@@ -75,7 +75,7 @@
       announce('Gravity unlocked. Drag and throw the pieces. Tap a link to open it. Press Escape or Restore to return to the site.');
     } catch (error) {
       playground?.restore();
-      announce('Gravity could not load. Please try the code or six taps again.');
+      announce('Gravity could not load. Please try the code or two taps again.');
       announcement.classList.add('gravity-error');
       console.error('Gravity playground:', error);
     } finally {
@@ -111,7 +111,7 @@
     if (now - firstTap > 4000 || now - lastTap > 1200) taps = 0;
     if (!taps) firstTap = now;
     lastTap = now;
-    if (++taps === 6) {
+    if (++taps === 2) {
       taps = 0;
       void toggleGravity();
     }
