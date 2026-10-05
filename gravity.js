@@ -138,7 +138,6 @@
       <div class="gravity-toolbar">
         <div class="gravity-caption">
           <h2 id="gravity-title">Gravity unlocked</h2>
-          <p>Turns out these links have mass.</p>
         </div>
         <button type="button" data-action="shake">Shake it up</button>
         <button type="button" data-action="float" aria-pressed="false">Zero G</button>
