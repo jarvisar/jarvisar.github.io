@@ -108,6 +108,12 @@
     if (event.ctrlKey || event.metaKey || event.altKey ||
         target.isContentEditable || target.closest('input, textarea, select')) return;
     const key = event.key.toLowerCase();
+    if (playground && key === ' ') {
+      // Takes priority over the focused button, which starts as Restore.
+      event.preventDefault();
+      if (!event.repeat) playground.toggleFloat();
+      return;
+    }
     if (playground && directions[key]) {
       event.preventDefault();
       playground.steer(directions[key]);
@@ -124,6 +130,11 @@
       keys = [];
       void toggleGravity();
     }
+  });
+
+  // Some browsers activate a focused button on keyup, so cancel that too.
+  document.addEventListener('keyup', event => {
+    if (playground && event.key === ' ') event.preventDefault();
   });
 
   document.addEventListener('click', event => {
@@ -257,6 +268,7 @@
       const parts = ['Drag & fling', touch ? 'Tap empty space to blast' : 'Click empty space to blast'];
       if (tilt) parts.push('Tilt to steer');
       else if (!touch) parts.push('Arrow keys steer gravity');
+      if (!touch) parts.push('Space for Zero G');
       if (sensors.motion && touch) parts.push('Shake to mix it up');
       if (!touch) parts.push('Esc to restore');
       hint.textContent = parts.join(' · ');
@@ -851,6 +863,6 @@
       wake();
     }
 
-    return { start, restore, steer };
+    return { start, restore, steer, toggleFloat };
   }
 })();
