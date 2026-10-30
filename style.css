@@ -364,6 +364,56 @@ html.gravity-active {
   box-shadow: 0 1px 12px rgb(43 123 214 / 0.15);
   content: '';
   pointer-events: none;
+  opacity: 0;
+  transition: opacity 400ms ease;
+}
+
+.gravity-stage.is-collapsed::after,
+.gravity-stage.is-collapsed :is(.gravity-toolbar, .gravity-hint) {
+  opacity: 1;
+  translate: 0;
+}
+
+/* Empty copies of the header bar and card that fade out as the page collapses. */
+.gravity-ghost {
+  position: absolute;
+  margin: 0;
+  max-width: none;
+  pointer-events: none;
+  transition: opacity 600ms ease 150ms;
+}
+
+.gravity-stage.is-collapsed .gravity-ghost {
+  opacity: 0;
+}
+
+.gravity-stage.is-restoring .gravity-ghost {
+  transition: opacity 450ms ease;
+}
+
+.gravity-ripple {
+  position: absolute;
+  z-index: 1;
+  width: var(--size);
+  height: var(--size);
+  margin: calc(var(--size) / -2) 0 0 calc(var(--size) / -2);
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  animation: gravity-ripple 450ms ease-out;
+}
+
+@keyframes gravity-ripple {
+  from {
+    opacity: 0.6;
+    transform: scale(0.1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(1);
+  }
 }
 
 .gravity-toolbar {
@@ -382,6 +432,9 @@ html.gravity-active {
   background: var(--surface);
   box-shadow: 0 3px 14px rgb(0 0 0 / 0.15);
   transform: translateX(-50%);
+  opacity: 0;
+  translate: 0 -8px;
+  transition: opacity 300ms ease, translate 300ms ease;
 }
 
 .gravity-caption {
@@ -445,6 +498,8 @@ html.gravity-active {
   font-size: 12px;
   text-align: center;
   pointer-events: none;
+  opacity: 0;
+  transition: opacity 300ms ease;
 }
 
 .gravity-piece {
@@ -469,6 +524,49 @@ html.gravity-active {
 
 .gravity-piece-content {
   transform-origin: top left;
+  transition: filter 150ms ease;
+}
+
+.gravity-piece.is-grabbed .gravity-piece-content {
+  filter: drop-shadow(0 8px 10px rgb(0 0 0 / 0.25));
+}
+
+/* The trip home: pieces settle into place and drop their card styling. */
+.gravity-stage.is-restoring .gravity-piece {
+  transition:
+    transform 560ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    width 560ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    height 560ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.gravity-stage.is-restoring .gravity-piece-content {
+  transition:
+    transform 560ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    width 560ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.gravity-stage.is-restoring :is(.gravity-project-text .gravity-link, .gravity-project-host .gravity-link, .gravity-footer p, .gravity-heading h2, .gravity-brand .brand) {
+  transition: border-color 400ms ease, background-color 400ms ease, box-shadow 400ms ease, border-radius 400ms ease;
+}
+
+.gravity-stage.is-restoring :is(.gravity-project-text .gravity-link, .gravity-project-host .gravity-link, .gravity-footer p) {
+  border-color: transparent;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.gravity-stage.is-restoring .gravity-heading h2 {
+  border-right-color: transparent;
+  border-left-color: transparent;
+  border-radius: 0;
+}
+
+.gravity-stage.is-restoring .gravity-brand .brand {
+  box-shadow: none;
+}
+
+.gravity-project-text .text {
+  display: block;
 }
 
 .gravity-piece-content > :is(h1, h2, p) {
