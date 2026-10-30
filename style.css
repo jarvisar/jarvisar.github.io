@@ -21,6 +21,10 @@
   --header-1: #45484e;
   --header-2: #2a2c30;
   --icon-shadow: 0 1px 2px rgb(0 0 0 / 0.3);
+  --badge-1: #f2f7fd;
+  --badge-2: #dde9f7;
+  --badge-border: #8db4e2;
+  --badge-text: #1f63b0;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -45,6 +49,10 @@
     --header-1: #2f3034;
     --header-2: #1d1e21;
     --icon-shadow: 0 1px 3px rgb(0 0 0 / 0.7);
+    --badge-1: #2d4562;
+    --badge-2: #233850;
+    --badge-border: #3f6896;
+    --badge-text: #a8cdf5;
   }
 }
 
@@ -299,6 +307,24 @@ li + li {
 
 .row:hover .name {
   color: var(--link);
+}
+
+.badge {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 0 5px;
+  border: 1px solid var(--badge-border);
+  border-radius: 3px;
+  background: linear-gradient(var(--badge-1), var(--badge-2));
+  box-shadow: inset 0 1px 0 var(--bar-highlight);
+  color: var(--badge-text);
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  line-height: 15px;
+  text-shadow: none;
+  text-transform: uppercase;
+  vertical-align: 2px;
 }
 
 .desc {
