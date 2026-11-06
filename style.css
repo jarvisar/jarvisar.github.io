@@ -3,6 +3,7 @@
   color-scheme: light;
   --font: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   --bg: #e4e4e4;
+  --topo: url('/topo-light.svg');
   --surface: #ffffff;
   --surface-hover: #f3f6fa;
   --border: #e2e2e2;
@@ -31,6 +32,7 @@
   :root {
     color-scheme: dark;
     --bg: #19191b;
+    --topo: url('/topo-dark.svg');
     --surface: #2b2c2f;
     --surface-hover: #35383d;
     --border: #232426;
@@ -64,7 +66,7 @@ body {
   margin: 0;
   font: 14px/1.5 var(--font);
   color: var(--text);
-  background: var(--bg);
+  background: var(--bg) var(--topo) center top / 1000px;
 }
 
 a {
@@ -376,7 +378,8 @@ html.gravity-active {
   z-index: 1000;
   inset: 0;
   overflow: hidden;
-  background: var(--bg);
+  /* gravity.js sets the offset so the pattern lines up with the scrolled page behind it */
+  background: var(--bg) var(--topo) center var(--gravity-topo-y, 0) / 1000px;
   touch-action: none;
 }
 

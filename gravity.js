@@ -207,6 +207,7 @@
     const engine = Engine.create({ enableSleeping: true, positionIterations: 8, velocityIterations: 8 });
     const stage = document.createElement('div');
     stage.className = 'gravity-stage';
+    stage.style.setProperty('--gravity-topo-y', `${-scroll.y}px`);
     stage.setAttribute('role', 'dialog');
     stage.setAttribute('aria-modal', 'true');
     stage.setAttribute('aria-labelledby', 'gravity-title');
