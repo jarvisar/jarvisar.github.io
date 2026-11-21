@@ -8,6 +8,7 @@
       name="description"
       content="Web apps and games by Jarvizar that run in the browser, including Citydriver 2, Coastline, Orrery, 4D VR, SVGmap and City Model."
     />
+    <meta name="author" content="Jarvizar" />
     <link rel="canonical" href="https://jarvisar.com/" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png" />
@@ -22,7 +23,8 @@
     <meta property="og:url" content="https://jarvisar.com/" />
     <meta name="twitter:card" content="summary" />
 
-    <!-- WebSite sets the site name Google shows. Person ties the name to this domain for name searches -->
+    <!-- WebSite sets the site name Google shows. Person ties the name to this domain for name searches.
+         The apps' author entries use the same @id and links. -->
     <script type="application/ld+json">
       [
         {
@@ -30,15 +32,26 @@
           "@type": "WebSite",
           "name": "Jarvizar",
           "alternateName": "jarvisar",
-          "url": "https://jarvisar.com/"
+          "url": "https://jarvisar.com/",
+          "publisher": { "@id": "https://jarvisar.com/#person" }
         },
         {
           "@context": "https://schema.org",
           "@type": "Person",
+          "@id": "https://jarvisar.com/#person",
           "name": "Adam Jarvis",
+          "alternateName": ["Jarvizar", "jarvisar"],
           "jobTitle": "Software Engineer",
           "url": "https://jarvisar.com/",
-          "sameAs": ["https://github.com/jarvisar", "https://www.linkedin.com/in/jarvisar", "https://www.youtube.com/@Jarvizar"]
+          "sameAs": [
+            "https://github.com/jarvisar",
+            "https://www.linkedin.com/in/jarvisar",
+            "https://www.youtube.com/@Jarvizar",
+            "https://www.patreon.com/Jarvizar",
+            "https://makerworld.com/en/@jarvizar",
+            "https://www.printables.com/@jarvizar",
+            "https://www.thingiverse.com/jarvizar"
+          ]
         }
       ]
     </script>
